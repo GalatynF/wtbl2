@@ -6,7 +6,11 @@ For setup instructions please see the [fabric wiki page](https://fabricmc.net/wi
 
 ## Idées
 
-
+* Les fleurs qui font faire un bond
+* FAIT Sable = lenteur
+* FAIT En feu = rapidité
+* FAIT Dégâts multipliés par la vitesse de l'attaquant (mvmtspeed*10)
+* En feu plus longtemps
 
 ## License
 
