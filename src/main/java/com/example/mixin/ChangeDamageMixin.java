@@ -19,6 +19,9 @@ public abstract class ChangeDamageMixin extends Entity {
     @ModifyArg(method = "damage", at=@At(value="INVOKE",
             target = "Lnet/minecraft/entity/LivingEntity;applyDamage(Lnet/minecraft/entity/damage/DamageSource;F)V"))
     private float multiplyDamageBySpeed(DamageSource source, float amount) {
+        if(this.getWorld().isClient()) {
+            return amount;
+        }
         if (source.getAttacker() != null && source.getAttacker() instanceof LivingEntity) {
             amount = amount * 10 * ((LivingEntity)source.getAttacker()).getMovementSpeed();
         }

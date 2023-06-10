@@ -11,6 +11,7 @@ For setup instructions please see the [fabric wiki page](https://fabricmc.net/wi
 * FAIT En feu = rapidité
 * FAIT Dégâts multipliés par la vitesse de l'attaquant (mvmtspeed*10)
 * En feu plus longtemps
+* Manger un truc permet d'avoir résistance au feu
 
 ## License
 

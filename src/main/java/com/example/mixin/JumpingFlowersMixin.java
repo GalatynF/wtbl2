@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,8 +20,11 @@ public class JumpingFlowersMixin {
 
     @Inject(at = @At("HEAD"), method = "onEntityCollision")
     private void boom(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
+        if(world.isClient()) {
+            return;
+        }
         if (((AbstractBlock) (Object) this) instanceof FlowerBlock
-                && entity instanceof LivingEntity
+                && entity instanceof PlayerEntity
                 && !entity.isSneaking()) {
             ((LivingEntity)entity).addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 20, 20, true, false, false));
 
