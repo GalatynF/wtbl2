@@ -6,12 +6,19 @@ For setup instructions please see the [fabric wiki page](https://fabricmc.net/wi
 
 ## Idées
 
-* Les fleurs qui font faire un bond
+* FAIT Les fleurs qui font faire un bond
 * FAIT Sable = lenteur
 * FAIT En feu = rapidité
 * FAIT Dégâts multipliés par la vitesse de l'attaquant (mvmtspeed*10)
-* En feu plus longtemps
-* Manger un truc permet d'avoir résistance au feu
+* FAIT En feu plus longtemps
+* FAIT Manger un truc permet d'avoir résistance au feu
+* Bocal sur la tête pour respirer sous l'eau
+* Les frames des portails s'échappent
+* En permanence pourchassé par un phantom
+* Une attaque de dash
+* Stand rush
+* Méga boss : invoque le wither avec une arène si le portail de l'end est rempli
+* Quand il pleut on peut voler comme Neo si on tape "woah"
 
 ## License
 

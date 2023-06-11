@@ -2,6 +2,9 @@ package com.example;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
@@ -43,5 +46,13 @@ public class Tool {
         double z = (force * (target.getZ() - attacker.getZ()));
         attacker.setVelocity(x, y, z);
         attacker.velocityModified = true;
+    }
+
+    public static void addStatus(LivingEntity entity, StatusEffect statusEffect, int duration, int amplifier, boolean showParticles, boolean showIcon) {
+        entity.addStatusEffect(new StatusEffectInstance(statusEffect, duration, amplifier, true, showParticles, showIcon));
+    }
+
+    public static void print(Object msg) {
+        System.out.println(msg);
     }
 }

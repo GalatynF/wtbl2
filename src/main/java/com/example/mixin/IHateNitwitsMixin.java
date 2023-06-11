@@ -34,7 +34,8 @@ public abstract class IHateNitwitsMixin extends MerchantEntity {
     private void boomBox(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         World world = this.getWorld();
         if (!world.isClient) {
-            if (this.getVillagerData().getProfession().equals(VillagerProfession.NITWIT)) {
+            if (this.getVillagerData().getProfession().equals(VillagerProfession.NITWIT)
+                || this.getVillagerData().getProfession().equals(VillagerProfession.NONE)) {
                 TntEntity tntEntity = new TntEntity(world, this.getX() + 0.5D, this.getY(), this.getZ() + 0.5D, null);
                 tntEntity.setFuse(200);
                 ((ICauseImTNTMixin) tntEntity).setBlackHole();

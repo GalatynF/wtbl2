@@ -27,7 +27,6 @@ public class JumpingFlowersMixin {
                 && entity instanceof PlayerEntity
                 && !entity.isSneaking()) {
             ((LivingEntity)entity).addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 20, 20, true, false, false));
-
         }
     }
 }

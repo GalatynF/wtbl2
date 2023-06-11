@@ -1,19 +1,22 @@
 {
-	"required": true,
-	"package": "com.example.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"CauseImTNTMixin",
-		"ChangeDamageMixin",
-		"ClassyTerroristsMixin",
-		"FatInducedFireResistanceMixin",
-		"IHateNitwitsMixin",
-		"JumpingFlowersMixin",
-		"MovementSpeedMixin",
-		"NeverEndingFireMixin",
-		"WhatIsLoveMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "com.example.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "CauseImTNTMixin",
+    "ChangeDamageMixin",
+    "ChokeInEndMixin",
+    "ClassyTerroristsMixin",
+    "FatInducedFireResistanceMixin",
+    "IHateNitwitsMixin",
+    "JumpingFlowersMixin",
+    "MovementSpeedMixin",
+    "NeverEndingFireMixin",
+    "RebreatherMixin",
+    "WaterHelmetMixin",
+    "WhatIsLoveMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }
