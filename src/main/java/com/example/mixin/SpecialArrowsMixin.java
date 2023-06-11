@@ -48,13 +48,14 @@ public abstract class SpecialArrowsMixin extends Entity {
                     soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
                 }
                 this.playSound(soundEvent, 5, 1.0f);
-                this.remove(RemovalReason.DISCARDED);
+                //this.remove(RemovalReason.DISCARDED);
             }
             if (this.getCustomName().getString().equals("wtbl2_accio") && type == HitResult.Type.ENTITY && this.getOwner()!=null) {
                 Entity target = ((EntityHitResult)hitResult).getEntity();
                 if(((IEntityValuesMixin) target).canBeAccioed()) {
                     Tool.dashTo(target, this.getOwner(), 0.5f);
                     this.remove(RemovalReason.DISCARDED);
+                    this.playSound(SoundEvents.BLOCK_PORTAL_TRIGGER, 5, 1);
                     ((IEntityValuesMixin) target).setAccioed(20);
                 }
             }
