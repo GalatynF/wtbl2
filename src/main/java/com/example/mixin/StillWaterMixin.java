@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WaterFluid.class)
 public abstract class StillWaterMixin extends FlowableFluid {
-    @Inject(at=@At("INVOKE"), method="getFlowSpeed", cancellable = true)
+    @Inject(at=@At("HEAD"), method="getFlowSpeed", cancellable = true)
     private void noThanks(WorldView world, CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue(0);
         cir.cancel();

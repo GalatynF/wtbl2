@@ -35,10 +35,10 @@ public abstract class FatInducedFireResistanceMixin extends LivingEntity {
             return;
         }
         if(this.getHungerManager().getFoodLevel() >= 17) {
-            this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20, 0, true, false, false));
+            this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 30, 0, true, false, false));
         }
         if(this.getHungerManager().getSaturationLevel() > 0) {
-            this.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 20, 0, true, false, false));
+            this.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 30, 0, true, false, false));
         }
     }
 }

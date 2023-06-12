@@ -26,10 +26,10 @@ public abstract class MovementSpeedMixin extends Entity {
     private void changeSpeed(CallbackInfo ci) {
         if(!getWorld().isClient()) {
             if (this.isOnFire()) {
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 2, true, false, false));
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10, 2, true, false, false));
             } else if (this.getSteppingBlockState().equals(Blocks.SAND.getDefaultState())
                     || this.getSteppingBlockState().equals(Blocks.RED_SAND.getDefaultState())) {
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 0, true, false, false));
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 0, true, false, false));
             }
         }
     }

@@ -26,7 +26,7 @@ public abstract class WaterHelmetMixin extends LivingEntity {
     @Inject(method="tick", at=@At("HEAD"))
     private void letMeBreathe(CallbackInfo ci) {
         if (!this.getWorld().isClient() && this.getEquippedStack(EquipmentSlot.HEAD).getItem().equals(Items.GLASS)) {
-            this.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 20, 0, true, false, false));
+            this.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 30, 0, true, false, false));
         }
     }
 }

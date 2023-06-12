@@ -4,15 +4,18 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AccioedMixin",
+    "AlternateDimensionHoppingTechniquesMixin",
+    "ArmorstandMixin",
+    "ArmorStandMixin2",
     "CauseImTNTMixin",
     "ChangeDamageMixin",
     "ChokeInEndMixin",
-    "AlternateDimensionHoppingTechniquesMixin",
     "FatInducedFireResistanceMixin",
     "HurtfulXPMixin",
     "IBelieveICanBeaconFlyMixin",
     "IHateNitwitsMixin",
     "JumpingFlowersMixin",
+    "JumpscareMixin",
     "MovementSpeedMixin",
     "MultishotPearlMixin",
     "NeverEndingFireMixin",
@@ -22,6 +25,7 @@
     "RebreatherMixin",
     "SpecialArrowsMixin",
     "WaterHelmetMixin",
+    "WaterPressureMixin",
     "WhatIsLoveMixin"
   ],
   "injectors": {

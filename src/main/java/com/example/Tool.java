@@ -40,6 +40,9 @@ public class Tool {
     }
 
     public static boolean isPlayerLookingAt(LivingEntity target, PlayerEntity player) {
+        if(player == null) {
+            return false;
+        }
         Vec3d vec3d = player.getRotationVec(1.0F).normalize();
         for (float i = 0; i < 3; i = i + 0.5F) {
             Vec3d vec3d2 = new Vec3d(target.getX() - player.getX(), target.getEyeY() - player.getEyeY() - i, target.getZ() - player.getZ());
@@ -127,9 +130,11 @@ public class Tool {
         }
     }
 
-    public static void summonWither(World world, BlockPos pos) {
+    public static void summonWither(World world, BlockPos pos, @Nullable String customName) {
         WitherEntity witherEntity = EntityType.WITHER.create(world);
         if (witherEntity != null) {
+            if(customName != null)
+                witherEntity.setCustomName(Text.of(customName));
             witherEntity.refreshPositionAndAngles((double) pos.getX() + 0.5, (double) pos.getY() + 0.55, (double) pos.getZ() + 0.5, 0.0f, 0.0f);
             witherEntity.onSummoned();
             for (ServerPlayerEntity serverPlayerEntity : world.getNonSpectatingEntities(ServerPlayerEntity.class, witherEntity.getBoundingBox().expand(50.0))) {

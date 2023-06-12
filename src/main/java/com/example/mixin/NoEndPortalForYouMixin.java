@@ -32,10 +32,9 @@ public abstract class NoEndPortalForYouMixin extends BlockWithEntity {
         Tool.fillCube(world, centre.add(-groundRadius, -3, -groundRadius), centre.add(groundRadius, 100, groundRadius), air);
         Tool.fillCube(world, centre.add(-groundRadius, -3, -groundRadius), centre.add(groundRadius, -2, groundRadius), obsidian);
         // Random pillars
-        for (int i = -groundRadius ; i < groundRadius ; ++i) {
-            for (int j = -groundRadius ; j < groundRadius ; ++j) {
-                if (Math.random() < 0.03) {
-                    Tool.print("THERE");
+        for (int i = -groundRadius ; i < groundRadius ; i+=3) {
+            for (int j = -groundRadius ; j < groundRadius ; j+=3) {
+                if (Math.random() < 0.1) {
                     Tool.fillCube(world,
                                     new BlockPos((int) (i + Math.random()*3), -3, (int) (j + Math.random()*3)).add(centre.getX(), centre.getY(), centre.getZ()),
                                     new BlockPos(i, (int) (Math.random()*10-1), j).add(centre.getX(), centre.getY(), centre.getZ()),
@@ -53,7 +52,7 @@ public abstract class NoEndPortalForYouMixin extends BlockWithEntity {
             // Don't call this more than once lol
             Tool.fillCube(world, pos.add(-4, -1, -4), pos.add(4, 1, 4), Blocks.AIR.getDefaultState());
             createArena(world, pos);
-            //Tool.summonWither(world, pos);
+            Tool.summonWither(world, pos, "SURPRISE MOTHERDUCKER");
             ci.cancel();
         }
     }
