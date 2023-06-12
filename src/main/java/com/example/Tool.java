@@ -1,7 +1,15 @@
 package com.example;
 
+import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CarvedPumpkinBlock;
+import net.minecraft.block.WitherSkullBlock;
+import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -10,11 +18,13 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -95,5 +105,37 @@ public class Tool {
 
     public static BlockPos toBlockPos(Vec3d vec) {
         return new BlockPos((int)vec.x, (int)vec.y, (int)vec.z);
+    }
+
+    public static Vec3d toVec3d (BlockPos pos) {
+        return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    public static void fillCube(World world, BlockPos corner1, BlockPos corner2, BlockState block) {
+        int minX = Math.min(corner1.getX(), corner2.getX());
+        int maxX = Math.max(corner1.getX(), corner2.getX());
+        int minZ = Math.min(corner1.getZ(), corner2.getZ());
+        int maxZ = Math.max(corner1.getZ(), corner2.getZ());
+        int minY = Math.min(corner1.getY(), corner2.getY());
+        int maxY = Math.max(corner1.getY(), corner2.getY());
+        for (int i = minX ; i < maxX ; ++i) {
+            for(int j = minZ ; j < maxZ ; ++j) {
+                for(int k = minY ; k < maxY ; ++k) {
+                    world.setBlockState(new BlockPos(i, k, j), block);
+                }
+            }
+        }
+    }
+
+    public static void summonWither(World world, BlockPos pos) {
+        WitherEntity witherEntity = EntityType.WITHER.create(world);
+        if (witherEntity != null) {
+            witherEntity.refreshPositionAndAngles((double) pos.getX() + 0.5, (double) pos.getY() + 0.55, (double) pos.getZ() + 0.5, 0.0f, 0.0f);
+            witherEntity.onSummoned();
+            for (ServerPlayerEntity serverPlayerEntity : world.getNonSpectatingEntities(ServerPlayerEntity.class, witherEntity.getBoundingBox().expand(50.0))) {
+                Criteria.SUMMONED_ENTITY.trigger(serverPlayerEntity, witherEntity);
+            }
+            world.spawnEntity(witherEntity);
+        }
     }
 }

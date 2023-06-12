@@ -17,7 +17,7 @@
     "MultishotPearlMixin",
     "NeverEndingFireMixin",
     "NoEndPortalForYouMixin",
-    "NoPortalsForYouMixin",
+    "NoNetherPortalForYouMixin",
     "ParryHotterMixin",
     "RebreatherMixin",
     "SpecialArrowsMixin",

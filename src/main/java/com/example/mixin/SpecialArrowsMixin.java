@@ -55,7 +55,7 @@ public abstract class SpecialArrowsMixin extends Entity {
                 if(((IEntityValuesMixin) target).canBeAccioed()) {
                     Tool.dashTo(target, this.getOwner(), 0.5f);
                     this.remove(RemovalReason.DISCARDED);
-                    this.playSound(SoundEvents.BLOCK_PORTAL_TRIGGER, 5, 1);
+                    this.playSound(SoundEvents.ENTITY_ENDER_DRAGON_FLAP, 5, 1);
                     ((IEntityValuesMixin) target).setAccioed(20);
                 }
             }
