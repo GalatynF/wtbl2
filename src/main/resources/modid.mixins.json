@@ -23,6 +23,7 @@
     "NoNetherPortalForYouMixin",
     "ParryHotterMixin",
     "RebreatherMixin",
+    "ReviveMixin",
     "SpecialArrowsMixin",
     "WaterHelmetMixin",
     "WaterPressureMixin",
