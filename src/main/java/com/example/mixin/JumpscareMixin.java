@@ -27,15 +27,21 @@ public abstract class JumpscareMixin extends LivingEntity {
     @Inject(method="tick", at=@At("HEAD"))
     private void boo(CallbackInfo ci) {
         World world = this.getWorld();
-        Tool.print(world.getTime());
-        if(!world.isClient()
-                && world.getTime()%100 == 0
+        if(world.isClient())
+                return;
+
+        // If the mannequin disappeard somehow
+        if(world.getEntityById(MyComponents.CURSED.get((PlayerEntity)(Object)this).getMannequinId()) == null)
+            MyComponents.CURSED.get((PlayerEntity)(Object)this).setMannequinId(-1);
+
+        if(world.getTime()%100 == 0
                 && !this.isCreative()
                 && world.getLightLevel(this.getBlockPos()) < 5
                 //&& MyComponents.CURSED.get((PlayerEntity)(Object)this).isMannequinCursed()
-                && !MyComponents.CURSED.get((PlayerEntity)(Object)this).hasMannequin()) {
+                && MyComponents.CURSED.get((PlayerEntity)(Object)this).getMannequinId() == -1) {
+            // return if there's a player too close
             for (PlayerEntity p : world.getPlayers()) {
-                if (this.distanceTo(p) < 50 && !this.getUuid().equals(p.getUuid())) {
+                if (this.distanceTo(p) < 30 && !this.getUuid().equals(p.getUuid())) {
                     return;
                 }
             }
@@ -45,7 +51,7 @@ public abstract class JumpscareMixin extends LivingEntity {
             armorStand.equipStack(EquipmentSlot.HEAD, Items.PLAYER_HEAD.getDefaultStack());
             MyComponents.CURSED_MANNEQUIN.get(armorStand).setOwner(this.getUuid());
             world.spawnEntity(armorStand);
-            MyComponents.CURSED.get((PlayerEntity)(Object)this).setHasMannequin(true);
+            MyComponents.CURSED.get((PlayerEntity)(Object)this).setMannequinId(armorStand.getId());
         }
     }
 }

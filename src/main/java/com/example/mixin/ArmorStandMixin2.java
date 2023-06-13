@@ -22,14 +22,15 @@ public abstract class ArmorStandMixin2 extends Entity {
 
     @Inject(method="remove", at=@At("HEAD"))
     private void notifyOwnerOfArmorStand(RemovalReason reason, CallbackInfo ci) {
+        if(!((LivingEntity)(Object)this instanceof ArmorStandEntity))
+                return;
         World world = this.getWorld();
-        Tool.print("EZZZZ");
         UUID owner = MyComponents.CURSED_MANNEQUIN.get((ArmorStandEntity)(Object)this).getOwner();
-        Tool.print("EZZZZRRRRRRRRRRR");
         if (!world.isClient
-                && (LivingEntity)(Object)this instanceof ArmorStandEntity
-                && owner != null) {
-            MyComponents.CURSED.get(world.getPlayerByUuid(owner)).setHasMannequin(false);
+                && owner != null
+                && world.getPlayerByUuid(owner) != null) {
+            //Tool.print(world.getPlayerByUuid(owner).getName()+" no longer has mannequin");
+            MyComponents.CURSED.get(world.getPlayerByUuid(owner)).setMannequinId(-1);
         }
     }
 }

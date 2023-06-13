@@ -3,18 +3,20 @@ package com.example.cardinal;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import net.minecraft.nbt.NbtCompound;
 
+import java.util.UUID;
+
 public interface Cursedcomponent extends ComponentV3 {
     boolean isMannequinCursed();
     void setMannequinCursed(boolean cursed);
 
-    boolean hasMannequin();
-    void setHasMannequin(boolean has);
+    int getMannequinId();
+    void setMannequinId(int mann);
 }
 
 class CursedMannequinComponent implements Cursedcomponent {
 
     private boolean isMannequinCursed = false;
-    private boolean hasMannequin = false;
+    private int mannequinId = -1;
 
     @Override
     public boolean isMannequinCursed() {
@@ -27,24 +29,25 @@ class CursedMannequinComponent implements Cursedcomponent {
     }
 
     @Override
-    public boolean hasMannequin() {
-        return this.hasMannequin;
+    public int getMannequinId() {
+        return this.mannequinId;
     }
 
     @Override
-    public void setHasMannequin(boolean has) {
-        this.hasMannequin = has;
+    public void setMannequinId(int mann) {
+        this.mannequinId = mann;
     }
+
 
     @Override
     public void readFromNbt(NbtCompound tag) {
         this.isMannequinCursed = tag.getBoolean("isMannequinCursed");
-        this.hasMannequin = tag.getBoolean("hasMannequin");
+        this.mannequinId = tag.getInt("mannequinId");
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("isMannequinCursed", this.isMannequinCursed);
-        tag.putBoolean("hasMannequin", this.hasMannequin);
+        tag.putInt("mannequinId", this.mannequinId);
     }
 }

@@ -33,8 +33,10 @@ public abstract class ArmorstandMixin extends LivingEntity {
                     remove = true;
                 }
             }
-            if((this.distanceTo(owner) > 5)
-                        || Tool.isPlayerLookingAt((LivingEntity) this, owner)) {
+            if(this.distanceTo(owner) > 5) {
+                remove = true;
+            }
+            if (Tool.isPlayerLookingAt((LivingEntity) this, owner)) {
                 owner.playSound(SoundEvents.AMBIENT_CAVE.value(), SoundCategory.AMBIENT, 5f, 1f);
                 remove = true;
             }
