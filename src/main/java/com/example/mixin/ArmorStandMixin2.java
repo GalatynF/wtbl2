@@ -1,8 +1,7 @@
 package com.example.mixin;
 
 import com.example.Tool;
-import com.example.iMixin.IArmorstandMixin;
-import com.example.iMixin.IPlayerMixin;
+import com.example.cardinal.MyComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -13,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.UUID;
+
 @Mixin(LivingEntity.class)
 public abstract class ArmorStandMixin2 extends Entity {
     public ArmorStandMixin2(EntityType<?> type, World world) {
@@ -22,8 +23,13 @@ public abstract class ArmorStandMixin2 extends Entity {
     @Inject(method="remove", at=@At("HEAD"))
     private void notifyOwnerOfArmorStand(RemovalReason reason, CallbackInfo ci) {
         World world = this.getWorld();
-        if (!world.isClient && (LivingEntity)(Object)this instanceof ArmorStandEntity && ((IArmorstandMixin)this).getOwner()!=null) {
-            ((IPlayerMixin)world.getPlayerByUuid(((IArmorstandMixin)this).getOwner())).setHasMannequin(false);
+        Tool.print("EZZZZ");
+        UUID owner = MyComponents.CURSED_MANNEQUIN.get((ArmorStandEntity)(Object)this).getOwner();
+        Tool.print("EZZZZRRRRRRRRRRR");
+        if (!world.isClient
+                && (LivingEntity)(Object)this instanceof ArmorStandEntity
+                && owner != null) {
+            MyComponents.CURSED.get(world.getPlayerByUuid(owner)).setHasMannequin(false);
         }
     }
 }

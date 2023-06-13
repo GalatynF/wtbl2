@@ -20,7 +20,7 @@ For setup instructions please see the [fabric wiki page](https://fabricmc.net/wi
 * FAIT Méga boss : invoque le wither avec une arène si le portail de l'end est rempli
 * Quand il pleut on peut voler comme Neo si on tape "woah"
 * FAIT Baguette magique : attirer les entités, s'attirer à elles (sneak)
-* Jumpscare stand
+* FAIT Jumpscare stand
 
 ## License
 

@@ -1,9 +1,7 @@
 package com.example.mixin;
 
 import com.example.Tool;
-import com.example.iMixin.IArmorstandMixin;
-import com.example.iMixin.IPlayerMixin;
-import net.minecraft.entity.Entity;
+import com.example.cardinal.MyComponents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -16,30 +14,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.UUID;
-
 @Mixin(ArmorStandEntity.class)
-public abstract class ArmorstandMixin extends LivingEntity implements IArmorstandMixin {
+public abstract class ArmorstandMixin extends LivingEntity {
     protected ArmorstandMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    private UUID playerOwner = null;
-
-    public void setOwner(UUID owner) {
-        this.playerOwner = owner;
-    }
-
-    public UUID getOwner() {
-        return this.playerOwner;
-    }
-
     @Inject(method = "tick", at=@At("HEAD"))
     private void disappear(CallbackInfo ci) {
-        if(this.playerOwner == null)
+        if(MyComponents.CURSED_MANNEQUIN.get((ArmorStandEntity)(Object)this).getOwner() == null)
             return;
         World world = this.getWorld();
-        PlayerEntity owner = world.getPlayerByUuid(this.playerOwner);
+        PlayerEntity owner = world.getPlayerByUuid(MyComponents.CURSED_MANNEQUIN.get((ArmorStandEntity)(Object)this).getOwner());
         if(!world.isClient() && owner!=null) {
             boolean remove = false;
             for (PlayerEntity p : world.getPlayers()) {
