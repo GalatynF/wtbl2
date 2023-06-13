@@ -1,5 +1,6 @@
 package com.example.mixin;
 
+import com.example.cardinal.MyComponents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -31,6 +32,7 @@ public abstract class NoNetherPortalForYouMixin extends Block {
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
             WardenEntity.addDarknessToClosePlayers((ServerWorld)world, Vec3d.ofCenter(pos), null, 40);
             LargeEntitySpawnHelper.trySpawnAt(EntityType.WARDEN, SpawnReason.TRIGGERED, (ServerWorld)world, pos, 20, 5, 6, LargeEntitySpawnHelper.Requirements.WARDEN);
+            MyComponents.CURSED.get(entity).setMannequinCursed(true);
             ci.cancel();
         }
     }

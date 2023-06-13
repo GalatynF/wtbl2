@@ -34,10 +34,9 @@ public abstract class JumpscareMixin extends LivingEntity {
         if(world.getEntityById(MyComponents.CURSED.get((PlayerEntity)(Object)this).getMannequinId()) == null)
             MyComponents.CURSED.get((PlayerEntity)(Object)this).setMannequinId(-1);
 
-        if(world.getTime()%100 == 0
+        if((world.getTime()%6000 == 0 || MyComponents.CURSED.get((PlayerEntity)(Object)this).isMannequinCursed())
                 && !this.isCreative()
                 && world.getLightLevel(this.getBlockPos()) < 5
-                //&& MyComponents.CURSED.get((PlayerEntity)(Object)this).isMannequinCursed()
                 && MyComponents.CURSED.get((PlayerEntity)(Object)this).getMannequinId() == -1) {
             // return if there's a player too close
             for (PlayerEntity p : world.getPlayers()) {
@@ -48,7 +47,12 @@ public abstract class JumpscareMixin extends LivingEntity {
             Vec3d rotation = this.getRotationVector().normalize();
             ArmorStandEntity armorStand = new ArmorStandEntity(world, this.getX()-2*rotation.x, this.getY(), this.getZ()-2*rotation.z);
             armorStand.setYaw(this.getYaw());
-            armorStand.equipStack(EquipmentSlot.HEAD, Items.PLAYER_HEAD.getDefaultStack());
+            if(MyComponents.CURSED.get((PlayerEntity)(Object)this).isMannequinCursed() || Math.random() < 0.5) {
+                armorStand.equipStack(EquipmentSlot.HEAD, Items.PLAYER_HEAD.getDefaultStack());
+            }
+            else {
+                armorStand.equipStack(EquipmentSlot.HEAD, Items.CREEPER_HEAD.getDefaultStack());
+            }
             MyComponents.CURSED_MANNEQUIN.get(armorStand).setOwner(this.getUuid());
             world.spawnEntity(armorStand);
             MyComponents.CURSED.get((PlayerEntity)(Object)this).setMannequinId(armorStand.getId());

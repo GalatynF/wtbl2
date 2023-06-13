@@ -1,5 +1,6 @@
 package com.example.mixin;
 
+import com.example.cardinal.MyComponents;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -27,6 +28,7 @@ public abstract class AlternateDimensionHoppingTechniquesMixin extends LivingEnt
             && world.getBlockState(this.getBlockPos().add(0, 1, 0)).equals(Blocks.LAVA.getDefaultState())
             && world.getBlockState(this.getBlockPos().add(0, -1, 0)).equals(Blocks.CRYING_OBSIDIAN.getDefaultState())) {
                 if (this.canUsePortals()) {
+                    MyComponents.CURSED.get(this).setMannequinCursed(false);
                     this.setInNetherPortal(this.getBlockPos());
                 }
             }
