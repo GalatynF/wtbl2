@@ -1,6 +1,7 @@
 package com.example.mixin;
 
 import com.example.Tool;
+import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -8,8 +9,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -54,6 +57,8 @@ public abstract class ReviveMixin extends Entity {
 
     @Shadow public abstract boolean damage(DamageSource source, float amount);
 
+    @Shadow public abstract void setSleepingPosition(BlockPos pos);
+
     @Unique boolean wtbl2_isDying = false;
     @Unique int wtbl2_reviveTicks = 0;
     @Unique int wtbl2_ticksBeforeDying = 200;
@@ -91,12 +96,20 @@ public abstract class ReviveMixin extends Entity {
             this.wtbl2_isDying = true;
             this.wtbl2_dyingSource = source;
             this.setHealth(0.5F);
-            this.clearStatusEffects();
             ((PlayerEntity) (Object) this).getHungerManager().setFoodLevel(2);
+            this.clearStatusEffects();
+            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.BLINDNESS, this.wtbl2_ticksBeforeDying, 0, false, false);
             Tool.addStatus((LivingEntity) (Object) this, StatusEffects.RESISTANCE, this.wtbl2_ticksBeforeDying, 10, false, false);
             Tool.addStatus((LivingEntity) (Object) this, StatusEffects.SLOWNESS, this.wtbl2_ticksBeforeDying, 50, false, false);
             Tool.addStatus((LivingEntity) (Object) this, StatusEffects.WEAKNESS, this.wtbl2_ticksBeforeDying, 10, false, false);
             Tool.addStatus((LivingEntity) (Object) this, StatusEffects.MINING_FATIGUE, this.wtbl2_ticksBeforeDying, 10, false, false);
+
+            AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(world, this.getX(), this.getY(), this.getZ());
+            areaEffectCloudEntity.setRadius(5);
+            areaEffectCloudEntity.setDuration(this.wtbl2_ticksBeforeDying);
+            areaEffectCloudEntity.setRadiusGrowth(-0.05f);
+            areaEffectCloudEntity.setParticleType(ParticleTypes.HAPPY_VILLAGER);
+            world.spawnEntity(areaEffectCloudEntity);
             cir.setReturnValue(false);
         }
     }
@@ -110,10 +123,6 @@ public abstract class ReviveMixin extends Entity {
         if(this.isDying() && !this.isDying()) {
             cir.setReturnValue(false);
         }
-        else {
-            //this.wtbl2_isDying = false;
-            Tool.print("You should die there");
-        }
     }
 
     @Inject(method="tick", at=@At("HEAD"))
@@ -123,6 +132,8 @@ public abstract class ReviveMixin extends Entity {
             return;
         }
         if (this.isDying()) {
+            this.setHealth(0.5F);
+            ((PlayerEntity) (Object) this).getHungerManager().setFoodLevel(2);
             this.tickBeforeDying();
             if (this.wtbl2_reviveTicks == 0 && this.getTicksBeforeDying() <= 0) {
                 this.clearStatusEffects();

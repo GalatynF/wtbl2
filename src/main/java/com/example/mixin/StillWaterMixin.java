@@ -1,7 +1,6 @@
 package com.example.mixin;
 
 import net.minecraft.fluid.FlowableFluid;
-import net.minecraft.fluid.LavaFluid;
 import net.minecraft.fluid.WaterFluid;
 import net.minecraft.world.WorldView;
 import org.spongepowered.asm.mixin.Mixin;

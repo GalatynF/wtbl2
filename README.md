@@ -21,6 +21,7 @@ For setup instructions please see the [fabric wiki page](https://fabricmc.net/wi
 * Quand il pleut on peut voler comme Neo si on tape "woah"
 * FAIT Baguette magique : attirer les entités, s'attirer à elles (sneak)
 * FAIT Jumpscare stand
+* Rocket animals
 
 ## License
 

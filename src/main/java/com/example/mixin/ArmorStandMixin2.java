@@ -1,6 +1,5 @@
 package com.example.mixin;
 
-import com.example.Tool;
 import com.example.cardinal.MyComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

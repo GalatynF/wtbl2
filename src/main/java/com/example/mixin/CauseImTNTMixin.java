@@ -1,7 +1,7 @@
 package com.example.mixin;
 
-import com.example.iMixin.ICauseImTNTMixin;
 import com.example.Tool;
+import com.example.iMixin.ICauseImTNTMixin;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.TntEntity;

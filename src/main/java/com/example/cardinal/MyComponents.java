@@ -8,8 +8,6 @@ import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.util.Identifier;
 
-import java.awt.*;
-
 public class MyComponents implements EntityComponentInitializer {
 
     public static final ComponentKey<Cursedcomponent> CURSED =

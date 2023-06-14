@@ -37,7 +37,7 @@ public abstract class SpecialArrowsMixin extends Entity {
         HitResult.Type type = hitResult.getType();
 
         if(!world.isClient() && this.getCustomName() != null) {
-            if(this.getCustomName().getString().equals("wtbl2_lightning")) {
+            if(this.getCustomName().getString().equals("wtbl2_lightning") && !type.equals(HitResult.Type.MISS)) {
                 LightningEntity lightningEntity;
                 BlockPos blockPos = this.getBlockPos();
                 SoundEvent soundEvent = SoundEvents.ENTITY_FIREWORK_ROCKET_LAUNCH;

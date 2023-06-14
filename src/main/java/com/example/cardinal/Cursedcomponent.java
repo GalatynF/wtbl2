@@ -3,8 +3,6 @@ package com.example.cardinal;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.UUID;
-
 public interface Cursedcomponent extends ComponentV3 {
     boolean isMannequinCursed();
     void setMannequinCursed(boolean cursed);

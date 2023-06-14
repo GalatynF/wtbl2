@@ -10,6 +10,7 @@
     "CauseImTNTMixin",
     "ChangeDamageMixin",
     "ChokeInEndMixin",
+    "EnderThunderMixin",
     "FatInducedFireResistanceMixin",
     "HurtfulXPMixin",
     "IBelieveICanBeaconFlyMixin",
@@ -27,7 +28,8 @@
     "SpecialArrowsMixin",
     "WaterHelmetMixin",
     "WaterPressureMixin",
-    "WhatIsLoveMixin"
+    "WhatIsLoveMixin",
+    "WitherSkullMixin"
   ],
   "injectors": {
     "defaultRequire": 1
