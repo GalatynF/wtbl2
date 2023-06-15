@@ -47,7 +47,7 @@ public abstract class NoEndPortalForYouMixin extends BlockWithEntity {
 
     @Inject(method="onEntityCollision", at=@At("INVOKE"), cancellable = true)
     private void cantHaveShitInOverworld(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
-        if (!world.isClient() && entity.isPlayer()) {
+        if (!world.isClient() && entity.isPlayer() && world.getRegistryKey() == World.OVERWORLD) {
             world.playSound((PlayerEntity) entity, pos, SoundEvents.BLOCK_BEACON_DEACTIVATE, SoundCategory.BLOCKS);
             // Don't call this more than once lol
             Tool.fillCube(world, pos.add(-4, -1, -4), pos.add(4, 1, 4), Blocks.AIR.getDefaultState());

@@ -24,15 +24,16 @@ public abstract class AlternateDimensionHoppingTechniquesMixin extends LivingEnt
     private void enterTheNether(CallbackInfo ci) {
         World world = this.getWorld();
         if (!world.isClient()) {
+            // Go to Nether
             if (world.getBlockState(this.getBlockPos()).equals(Blocks.LAVA.getDefaultState())
             && world.getBlockState(this.getBlockPos().add(0, 1, 0)).equals(Blocks.LAVA.getDefaultState())
             && world.getBlockState(this.getBlockPos().add(0, -1, 0)).equals(Blocks.CRYING_OBSIDIAN.getDefaultState())) {
                 if (this.canUsePortals()) {
-                    MyComponents.CURSED.get(this).setMannequinCursed(false);
                     this.setInNetherPortal(this.getBlockPos());
                 }
             }
 
+            // Go to End
             if(this.getY() > 1000 && world instanceof ServerWorld && this.canUsePortals()) {
                 RegistryKey<World> registryKey = world.getRegistryKey() == World.END ? World.OVERWORLD : World.END;
                 ServerWorld serverWorld = ((ServerWorld)world).getServer().getWorld(registryKey);

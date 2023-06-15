@@ -28,9 +28,11 @@
     "ReviveMixin",
     "SpecialArrowsMixin",
     "TacticalVexesMixin",
+    "TheCakeIsNotALieMixin",
     "WaterHelmetMixin",
     "WaterPressureMixin",
     "WhatIsLoveMixin",
+    "WitchCurseMixin",
     "WitherSkullMixin"
   ],
   "injectors": {

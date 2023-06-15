@@ -27,7 +27,7 @@ public abstract class NoNetherPortalForYouMixin extends Block {
 
     @Inject(method="onEntityCollision", at=@At("INVOKE"), cancellable = true)
     private void cantHaveShitInOverworld(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
-        if (!world.isClient() && entity.isPlayer()) {
+        if (!world.isClient() && entity.isPlayer() && world.getRegistryKey() == World.OVERWORLD) {
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
             WardenEntity.addDarknessToClosePlayers((ServerWorld)world, Vec3d.ofCenter(pos), null, 40);
             LargeEntitySpawnHelper.trySpawnAt(EntityType.WARDEN, SpawnReason.TRIGGERED, (ServerWorld)world, pos, 20, 5, 6, LargeEntitySpawnHelper.Requirements.WARDEN);

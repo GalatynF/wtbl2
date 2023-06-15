@@ -44,7 +44,7 @@ public abstract class JumpscareMixin extends LivingEntity {
                 }
             }
             Vec3d rotation = this.getRotationVector().normalize();
-            ArmorStandEntity armorStand = new ArmorStandEntity(world, this.getX()-2*rotation.x, this.getY(), this.getZ()-2*rotation.z);
+            ArmorStandEntity armorStand = new ArmorStandEntity(world, this.getX()-1.5*rotation.x, this.getY(), this.getZ()-1.5*rotation.z);
             armorStand.setYaw(this.getYaw());
             if(MyComponents.CURSED.get((PlayerEntity)(Object)this).isMannequinCursed() || Math.random() < 0.5) {
                 armorStand.equipStack(EquipmentSlot.HEAD, Items.PLAYER_HEAD.getDefaultStack());
