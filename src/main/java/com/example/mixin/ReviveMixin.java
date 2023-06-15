@@ -129,7 +129,7 @@ public abstract class ReviveMixin extends Entity {
 
             if(world.getTime()%20 == 0) {
                 if(world.getClosestPlayer((Entity)(Object)this, 3) != null
-                /*&& world.getClosestPlayer((Entity)(Object)this, 3).getUuid() != this.getUuid()*/) {
+                && world.getClosestPlayer((Entity)(Object)this, 3).getUuid() != this.getUuid()) {
                     this.setHealth(this.getHealth() + 1);
                 }
                 else {

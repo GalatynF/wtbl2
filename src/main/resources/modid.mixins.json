@@ -11,6 +11,7 @@
     "ChangeDamageMixin",
     "ChokeInEndMixin",
     "DragonVexSpawnMixin",
+    "EndermanTowerMixin",
     "EnderThunderMixin",
     "FatInducedFireResistanceMixin",
     "HurtfulXPMixin",
