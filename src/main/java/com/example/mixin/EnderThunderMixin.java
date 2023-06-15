@@ -26,13 +26,11 @@ public abstract class EnderThunderMixin extends ProjectileEntity {
     private void summonLightning(CallbackInfo ci) {
         World world = this.getWorld();
         if(!world.isClient() && world.getTime()%5 == 0 && this.getType().equals(EntityType.DRAGON_FIREBALL)) {
-            Tool.print("THERE");
             LightningEntity lightningEntity;
             BlockPos blockPos = this.getBlockPos();
             SoundEvent soundEvent = SoundEvents.ENTITY_FIREWORK_ROCKET_LAUNCH;
             if((lightningEntity = EntityType.LIGHTNING_BOLT.create(this.getWorld())) != null) {
-                Tool.print("THERE AGAIN");
-                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos.add((int) (Math.random()*2), 0, (int) (Math.random()*2))));
+                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos.add(-3*this.getMovementDirection().getOffsetX(), -5, -3*this.getMovementDirection().getOffsetZ())));
                 this.getWorld().spawnEntity(lightningEntity);
                 soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
             }
