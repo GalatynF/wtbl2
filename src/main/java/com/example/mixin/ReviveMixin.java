@@ -59,27 +59,17 @@ public abstract class ReviveMixin extends Entity {
 
     @Shadow public abstract void setSleepingPosition(BlockPos pos);
 
+    @Shadow public abstract float getHealth();
+
+    @Shadow public abstract float getMaxHealth();
+
     @Unique boolean wtbl2_isDying = false;
-    @Unique int wtbl2_reviveTicks = 0;
-    @Unique int wtbl2_ticksBeforeDying = 200;
     @Unique DamageSource wtbl2_dyingSource = null;
+
+    @Unique int wtbl2_countdownToNextRevive = 0;
 
     public boolean isDying() {
         return this.wtbl2_isDying;
-    }
-
-    public void addReviveTicks(int ticks) {
-        this.wtbl2_reviveTicks += ticks;
-    }
-
-
-    public void tickBeforeDying() {
-        this.wtbl2_ticksBeforeDying--;
-    }
-
-
-    public int getTicksBeforeDying() {
-        return this.wtbl2_ticksBeforeDying;
     }
 
     @Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isDead()Z"), cancellable = true)
@@ -89,24 +79,27 @@ public abstract class ReviveMixin extends Entity {
                 && this.getType().equals(EntityType.PLAYER)
                 && this.isDead()
                 && !this.wtbl2_isDying
-                && !Objects.equals(source.getType().msgId(), "genericKill")) {
+                && !Objects.equals(source.getType().msgId(), "genericKill")
+                && this.wtbl2_countdownToNextRevive == 0) {
             ServerPlayerEntity player = (ServerPlayerEntity) world.getPlayerByUuid(this.getUuid());
             if (player == null) return;
 
             this.wtbl2_isDying = true;
             this.wtbl2_dyingSource = source;
-            this.setHealth(0.5F);
+            this.setHealth(this.getMaxHealth()/2);
             ((PlayerEntity) (Object) this).getHungerManager().setFoodLevel(2);
             this.clearStatusEffects();
-            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.BLINDNESS, this.wtbl2_ticksBeforeDying, 0, false, false);
-            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.RESISTANCE, this.wtbl2_ticksBeforeDying, 10, false, false);
-            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.SLOWNESS, this.wtbl2_ticksBeforeDying, 50, false, false);
-            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.WEAKNESS, this.wtbl2_ticksBeforeDying, 10, false, false);
-            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.MINING_FATIGUE, this.wtbl2_ticksBeforeDying, 10, false, false);
+
+            int arbitraryStatusDurationTicks = 600;
+            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.BLINDNESS, arbitraryStatusDurationTicks, 0, false, false);
+            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.RESISTANCE, arbitraryStatusDurationTicks, 10, false, false);
+            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.SLOWNESS, arbitraryStatusDurationTicks, 50, false, false);
+            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.WEAKNESS, arbitraryStatusDurationTicks, 10, false, false);
+            Tool.addStatus((LivingEntity) (Object) this, StatusEffects.MINING_FATIGUE, arbitraryStatusDurationTicks, 10, false, false);
 
             AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(world, this.getX(), this.getY(), this.getZ());
             areaEffectCloudEntity.setRadius(5);
-            areaEffectCloudEntity.setDuration(this.wtbl2_ticksBeforeDying);
+            areaEffectCloudEntity.setDuration(200);
             areaEffectCloudEntity.setRadiusGrowth(-0.05f);
             areaEffectCloudEntity.setParticleType(ParticleTypes.HAPPY_VILLAGER);
             world.spawnEntity(areaEffectCloudEntity);
@@ -132,28 +125,32 @@ public abstract class ReviveMixin extends Entity {
             return;
         }
         if (this.isDying()) {
-            this.setHealth(0.5F);
             ((PlayerEntity) (Object) this).getHungerManager().setFoodLevel(2);
-            this.tickBeforeDying();
-            if (this.wtbl2_reviveTicks == 0 && this.getTicksBeforeDying() <= 0) {
+
+            if(world.getTime()%20 == 0) {
+                if(world.getClosestPlayer((Entity)(Object)this, 3) != null
+                /*&& world.getClosestPlayer((Entity)(Object)this, 3).getUuid() != this.getUuid()*/) {
+                    this.setHealth(this.getHealth() + 1);
+                }
+                else {
+                    this.setHealth(this.getHealth() - 1);
+                }
+            }
+
+            if (this.getHealth() <= 0) {
                 this.clearStatusEffects();
                 this.damage(this.wtbl2_dyingSource, 1000);
             }
-
-            if(world.getClosestPlayer((Entity)(Object)this, 3) != null
-                && world.getClosestPlayer((Entity)(Object)this, 3).getUuid() != this.getUuid()) {
-                this.addReviveTicks(1);
-            }
-            else {
-                this.addReviveTicks(this.wtbl2_reviveTicks == 0 ? 0 : -1);
-            }
-            if(this.wtbl2_reviveTicks >= 100) {
+            else if(this.getHealth() >= 20) {
                 this.wtbl2_isDying = false;
-                this.wtbl2_reviveTicks = 0;
-                this.wtbl2_ticksBeforeDying = 200;
                 this.wtbl2_dyingSource = null;
-                Tool.addStatus((LivingEntity) (Object)this, StatusEffects.SPEED, 60, 1, false, false);
+                this.wtbl2_countdownToNextRevive = 200;
+                this.clearStatusEffects();
+                Tool.addStatus((LivingEntity) (Object)this, StatusEffects.SPEED, 100, 1, false, false);
             }
+        }
+        else {
+            this.wtbl2_countdownToNextRevive -= this.wtbl2_countdownToNextRevive > 0 ? 1 : 0;
         }
     }
 }
