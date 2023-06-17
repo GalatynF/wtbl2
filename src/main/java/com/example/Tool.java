@@ -14,13 +14,19 @@ import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Tool {
     public static boolean isPlayerStaring(LivingEntity target, PlayerEntity player) {
@@ -74,6 +80,26 @@ public class Tool {
 
     public static void addStatus(LivingEntity entity, StatusEffect statusEffect, int duration, int amplifier, boolean showParticles, boolean showIcon) {
         entity.addStatusEffect(new StatusEffectInstance(statusEffect, duration, amplifier, true, showParticles, showIcon));
+    }
+
+    public static void sendGlobalMessage(ServerWorld world, String content) {
+        List<ServerPlayerEntity> players = world.getPlayers();
+        MutableText mess = Text.of(content).copy();
+        Style style = Style.EMPTY.withColor(9843250).withBold(true);
+
+        for (PlayerEntity p : players) {
+            p.sendMessage(mess.setStyle(style), true);
+        }
+    }
+
+    public static List<PlayerEntity> getPlayersNotCreative(World world) {
+        List<PlayerEntity> result = new java.util.ArrayList<>(List.of());
+        for (PlayerEntity p : world.getPlayers()) {
+            if(!p.isCreative()) {
+                result.add(p);
+            }
+        }
+        return result;
     }
 
     public static void fireArrow(PlayerEntity user, boolean canPickup, boolean invisible, boolean noGravity, @Nullable String customName) {

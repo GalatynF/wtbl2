@@ -24,10 +24,9 @@ public abstract class RebreatherMixin {
                 && this.getDefaultStack().getItem().equals(Items.GLASS)
                 && user.getEquippedStack(EquipmentSlot.HEAD).isEmpty()) {
             ItemStack itemStack = user.getStackInHand(hand);
-            ItemStack itemStack2 = user.getEquippedStack(EquipmentSlot.HEAD);
             user.equipStack(EquipmentSlot.HEAD, itemStack.getItem().getDefaultStack());
             user.getMainHandStack().decrement(1);
-            cir.setReturnValue(TypedActionResult.success(itemStack2.isEmpty() ? itemStack : itemStack2.copyAndEmpty()));
+            cir.setReturnValue(TypedActionResult.success(itemStack));
         }
     }
 }

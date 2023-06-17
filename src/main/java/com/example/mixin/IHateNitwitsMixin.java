@@ -8,6 +8,8 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.village.VillagerData;
@@ -47,6 +49,8 @@ public abstract class IHateNitwitsMixin extends MerchantEntity {
                 areaEffectCloudEntity.setRadiusGrowth(0.1f);
                 areaEffectCloudEntity.setParticleType(ParticleTypes.SOUL_FIRE_FLAME);
                 world.spawnEntity(areaEffectCloudEntity);
+
+                world.playSound(tntEntity ,tntEntity.getBlockPos(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 5, 1);
 
                 world.sendEntityStatus(this, (byte) 3);
                 }

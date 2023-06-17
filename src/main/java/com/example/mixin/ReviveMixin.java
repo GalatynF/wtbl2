@@ -153,4 +153,15 @@ public abstract class ReviveMixin extends Entity {
             this.wtbl2_countdownToNextRevive -= this.wtbl2_countdownToNextRevive > 0 ? 1 : 0;
         }
     }
+
+    @Inject(method = "jump", at=@At("HEAD"), cancellable = true)
+    private void noJump(CallbackInfo ci) {
+        World world = this.getWorld();
+        if(world.isClient() || !this.getType().equals(EntityType.PLAYER)) {
+            return;
+        }
+        if (this.isDying()) {
+            ci.cancel();
+        }
+    }
 }

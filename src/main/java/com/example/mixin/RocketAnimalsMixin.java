@@ -26,11 +26,11 @@ public abstract class RocketAnimalsMixin extends LivingEntity {
     @Inject(method = "collideWithEntity", at=@At("TAIL"))
     private void rocket(Entity entity, CallbackInfo ci) {
         World world = this.getWorld();
-        if(!world.isClient() && entity instanceof AnimalEntity && entity.isOnGround()) {
+        if(!world.isClient() && entity instanceof AnimalEntity && entity.isOnGround() && !((AnimalEntity) entity).isDead() && !entity.hasPassenger((Entity)(Object)this)) {
             ItemStack itemStack = Items.FIREWORK_ROCKET.getDefaultStack();
-            Vec3d vec3d = this.getPos();
-            Direction direction = entity.getMovementDirection();
+            Vec3d vec3d = entity.getPos();
             FireworkRocketEntity fireworkRocketEntity = new FireworkRocketEntity(world, entity, vec3d.x, vec3d.y, vec3d.z, itemStack);
+            fireworkRocketEntity.setInvisible(true);
             world.spawnEntity(fireworkRocketEntity);
 
             entity.startRiding(fireworkRocketEntity);

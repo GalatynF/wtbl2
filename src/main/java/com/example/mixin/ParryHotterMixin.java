@@ -35,6 +35,7 @@ public abstract class ParryHotterMixin {
     private void dash(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         if (!world.isClient()
                 && this.getDefaultStack().getItem().equals(Items.BLAZE_ROD)
+                && user.getStackInHand(hand) != null
                 && user.getStackInHand(hand).getName().getString().toLowerCase().contains("wand")
                 && !user.getItemCooldownManager().isCoolingDown(Items.BLAZE_ROD)) {
             if (!user.isCreative() && (double) 1 / (1.5*(user.experienceLevel+50)) > Math.random()) {

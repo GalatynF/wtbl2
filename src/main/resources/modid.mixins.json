@@ -19,6 +19,7 @@
     "IHateNitwitsMixin",
     "JumpingFlowersMixin",
     "JumpscareMixin",
+    "LeavesAnvilMixin",
     "MovementSpeedMixin",
     "MultishotPearlMixin",
     "NeverEndingFireMixin",
@@ -28,6 +29,7 @@
     "RebreatherMixin",
     "ReviveMixin",
     "RocketAnimalsMixin",
+    "ServerWorldEventsMixin",
     "SpecialArrowsMixin",
     "TacticalVexesMixin",
     "TheCakeIsNotALieMixin",
@@ -35,7 +37,8 @@
     "WaterPressureMixin",
     "WhatIsLoveMixin",
     "WitchCurseMixin",
-    "WitherSkullMixin"
+    "WitherSkullMixin",
+    "worldevents.LongerFireworkMixin"
   ],
   "injectors": {
     "defaultRequire": 1
