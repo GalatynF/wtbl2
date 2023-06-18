@@ -71,6 +71,49 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
         return this.wtbl2_acidRain;
     }
 
+    private void superpowerPlayer(boolean availablePlayers, List<PlayerEntity> playersNotCreative) {
+        if (!availablePlayers)
+            return;
+        PlayerEntity p2 = playersNotCreative.get((int) (Math.random() * playersNotCreative.size()));
+        Tool.addStatus(p2, StatusEffects.SPEED, 1200, 2, false, true);
+        Tool.addStatus(p2, StatusEffects.RESISTANCE, 1200, 4, false, true);
+        Tool.addStatus(p2, StatusEffects.JUMP_BOOST, 1200, 3, false, true);
+        Tool.addStatus(p2, StatusEffects.STRENGTH, 1200, 2, false, true);
+        Tool.addStatus(p2, StatusEffects.GLOWING, 1200, 0, false, false);
+        Tool.addStatus(p2, StatusEffects.INSTANT_HEALTH, 1, 20, false, false);
+        p2.sendMessage(Text.of("The god of badassery lends you their power for 60 seconds"), true);
+        LightningEntity lightningEntity;
+        BlockPos blockPos = p2.getBlockPos();
+        if (this.isSkyVisible(blockPos) && (lightningEntity = EntityType.LIGHTNING_BOLT.create((World) (Object) this)) != null) {
+            lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
+            this.spawnEntity(lightningEntity);
+        }
+    }
+
+    private void swapGear(List<PlayerEntity> playersNotCreative) {
+        if(playersNotCreative.size() < 2)
+            return;
+        List<PlayerInventory> inventories = new java.util.ArrayList<>(List.of());
+        int nbPlayers = playersNotCreative.size();
+        for (PlayerEntity p : playersNotCreative) {
+            inventories.add(p.getInventory());
+        }
+        // Save an inventory for swapping
+        List<ItemStack> saveSecondInv = new java.util.ArrayList<>(List.of());
+        for (int i = 0 ; i < inventories.get(1).size() ; ++i) {
+            saveSecondInv.add(inventories.get(1).getStack(i));
+        }
+
+        for (int i = 1 ; i < nbPlayers ; ++i) {
+            PlayerInventory nextInventory = playersNotCreative.get((i+1)%nbPlayers).getInventory();
+            inventories.get(i).clone(nextInventory);
+        }
+
+        for (int i = 0 ; i < saveSecondInv.size() ; ++i) {
+            playersNotCreative.get(0).getInventory().setStack(i, saveSecondInv.get(i));
+        }
+    }
+
     @Inject(method = "tick", at=@At("TAIL"))
     private void manageWorldEvents(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
         if(this.wtbl2_ticksBeforeEvent > 0)
@@ -138,22 +181,7 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     MyComponents.CURSED.get(p).setMannequinCursed(true);
                 }
                 case SUPERPOWERED_PLAYER -> {
-                    if (!availablePlayers)
-                        break;
-                    PlayerEntity p2 = playersNotCreative.get((int) (Math.random() * playersNotCreative.size()));
-                    Tool.addStatus(p2, StatusEffects.SPEED, 1200, 2, false, true);
-                    Tool.addStatus(p2, StatusEffects.RESISTANCE, 1200, 4, false, true);
-                    Tool.addStatus(p2, StatusEffects.JUMP_BOOST, 1200, 3, false, true);
-                    Tool.addStatus(p2, StatusEffects.STRENGTH, 1200, 2, false, true);
-                    Tool.addStatus(p2, StatusEffects.GLOWING, 1200, 0, false, false);
-                    Tool.addStatus(p2, StatusEffects.INSTANT_HEALTH, 1, 20, false, false);
-                    p2.sendMessage(Text.of("The god of badassery lends you their power for 60 seconds"), true);
-                    LightningEntity lightningEntity;
-                    BlockPos blockPos = p2.getBlockPos();
-                    if (this.isSkyVisible(blockPos) && (lightningEntity = EntityType.LIGHTNING_BOLT.create((World) (Object) this)) != null) {
-                        lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
-                        this.spawnEntity(lightningEntity);
-                    }
+                    superpowerPlayer(availablePlayers, playersNotCreative);
                 }
                 case ACID_RAIN -> {
                     this.setWeather(0, 3600, true, true);
@@ -168,27 +196,7 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     }
                 }
                 case SWAP_GEAR -> {
-                    if(playersNotCreative.size() < 2)
-                        break;
-                    List<PlayerInventory> inventories = new java.util.ArrayList<>(List.of());
-                    int nbPlayers = playersNotCreative.size();
-                    for (PlayerEntity p : playersNotCreative) {
-                        inventories.add(p.getInventory());
-                    }
-                    // Save an inventory for swapping
-                    List<ItemStack> saveSecondInv = new java.util.ArrayList<>(List.of());
-                    for (int i = 0 ; i < inventories.get(1).size() ; ++i) {
-                        saveSecondInv.add(inventories.get(1).getStack(i));
-                    }
-
-                    for (int i = 1 ; i < nbPlayers ; ++i) {
-                        PlayerInventory nextInventory = playersNotCreative.get((i+1)%nbPlayers).getInventory();
-                        inventories.get(i).clone(nextInventory);
-                    }
-
-                    for (int i = 0 ; i < saveSecondInv.size() ; ++i) {
-                        playersNotCreative.get(0).getInventory().setStack(i, saveSecondInv.get(i));
-                    }
+                    swapGear(playersNotCreative);
                 }
                 default -> {
                     Tool.sendGlobalMessage((ServerWorld) (Object) this, "No event this time...");

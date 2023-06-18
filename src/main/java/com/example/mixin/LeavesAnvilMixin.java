@@ -16,8 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LeavesAnvilMixin implements IAnvilMixin {
 
     @Override
-    public void turnToAnvilAndUpdate(World world, BlockPos pos, boolean turnTo, boolean checkIfLeaf) {
-        if (checkIfLeaf && !isALeaf(world.getBlockState(pos).getBlock()))
+    public void turnToAnvilAndUpdate(World world, BlockPos pos, boolean turnTo, boolean checkIfLeaf, int timesDone) {
+        if (timesDone == 0 || (checkIfLeaf && !isALeaf(world.getBlockState(pos).getBlock())))
                 return;
         if(turnTo)
             world.setBlockState(pos, Blocks.CHIPPED_ANVIL.getDefaultState());
@@ -26,7 +26,7 @@ public abstract class LeavesAnvilMixin implements IAnvilMixin {
                 for (int k = -1; k <= 1; ++k) {
                     if (!(i == 0 && j == 0 && k == 0)) {
                         BlockPos newPos = new BlockPos(pos.add(i, j, k));
-                        ((IAnvilMixin) world.getBlockState(pos).getBlock()).turnToAnvilAndUpdate(world, newPos, true, true);
+                        ((IAnvilMixin) world.getBlockState(pos).getBlock()).turnToAnvilAndUpdate(world, newPos, true, true, timesDone-1);
                     }
                 }
             }
@@ -61,6 +61,6 @@ public abstract class LeavesAnvilMixin implements IAnvilMixin {
             return;
         }
 
-        turnToAnvilAndUpdate((World) world, pos, false, false);
+        turnToAnvilAndUpdate((World) world, pos, false, false, 5);
     }
 }
