@@ -1,4 +1,4 @@
-package com.example.mixin;
+package com.example.mixin.jumpscare;
 
 import com.example.Tool;
 import com.example.cardinal.MyComponents;

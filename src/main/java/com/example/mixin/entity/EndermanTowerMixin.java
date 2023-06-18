@@ -1,4 +1,4 @@
-package com.example.mixin;
+package com.example.mixin.entity;
 
 import com.example.Tool;
 import net.minecraft.entity.Entity;
@@ -7,7 +7,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.EndermanEntity;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;

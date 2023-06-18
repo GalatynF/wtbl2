@@ -1,6 +1,5 @@
 package com.example.mixin;
 
-import com.example.Tool;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;

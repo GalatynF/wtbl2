@@ -1,4 +1,4 @@
-package com.example.mixin;
+package com.example.mixin.jumpscare;
 
 import com.example.cardinal.MyComponents;
 import net.minecraft.entity.Entity;

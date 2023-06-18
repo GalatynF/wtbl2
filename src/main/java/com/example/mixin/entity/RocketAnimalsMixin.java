@@ -1,4 +1,4 @@
-package com.example.mixin;
+package com.example.mixin.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -8,8 +8,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;

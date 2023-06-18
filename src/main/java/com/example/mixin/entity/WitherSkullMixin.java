@@ -1,4 +1,4 @@
-package com.example.mixin;
+package com.example.mixin.entity;
 
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;

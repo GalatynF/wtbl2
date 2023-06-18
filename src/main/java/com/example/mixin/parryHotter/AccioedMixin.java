@@ -1,4 +1,4 @@
-package com.example.mixin;
+package com.example.mixin.parryHotter;
 
 import com.example.iMixin.IEntityValuesMixin;
 import net.minecraft.entity.Entity;

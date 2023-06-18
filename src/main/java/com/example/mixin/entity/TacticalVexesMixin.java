@@ -1,11 +1,9 @@
-package com.example.mixin;
+package com.example.mixin.entity;
 
 import com.example.iMixin.IVexTntMixin;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.TntEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Items;

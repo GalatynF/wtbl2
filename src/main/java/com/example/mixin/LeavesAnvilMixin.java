@@ -1,22 +1,16 @@
 package com.example.mixin;
 
-import com.example.Tool;
 import com.example.iMixin.IAnvilMixin;
-import com.google.common.collect.ImmutableMap;
-import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Map;
-import java.util.Optional;
 
 @Mixin(Block.class)
 public abstract class LeavesAnvilMixin implements IAnvilMixin {

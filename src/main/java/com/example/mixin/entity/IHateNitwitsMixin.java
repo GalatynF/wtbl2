@@ -1,4 +1,4 @@
-package com.example.mixin;
+package com.example.mixin.entity;
 
 import com.example.iMixin.ICauseImTNTMixin;
 import net.minecraft.entity.AreaEffectCloudEntity;

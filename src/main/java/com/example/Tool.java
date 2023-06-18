@@ -20,12 +20,12 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Tool {
@@ -83,9 +83,13 @@ public class Tool {
     }
 
     public static void sendGlobalMessage(ServerWorld world, String content) {
+        sendGlobalMessage(world, content, "white");
+    }
+
+    public static void sendGlobalMessage(ServerWorld world, String content, String colour) {
         List<ServerPlayerEntity> players = world.getPlayers();
         MutableText mess = Text.of(content).copy();
-        Style style = Style.EMPTY.withColor(9843250).withBold(true);
+        Style style = Style.EMPTY.withColor(TextColor.parse(colour)).withBold(true);
 
         for (PlayerEntity p : players) {
             p.sendMessage(mess.setStyle(style), true);

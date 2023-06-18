@@ -1,6 +1,5 @@
 package com.example.mixin;
 
-import com.example.cardinal.MyComponents;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
