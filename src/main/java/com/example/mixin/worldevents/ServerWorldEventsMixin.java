@@ -84,7 +84,7 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                 this.wtbl2_ticksBeforeEvent = 100;
                 int nbPossibleOutcomes = Wtbl2WorldEvents.values().length-1;    //-1 because NONE
                 Wtbl2WorldEvents randEvent = Wtbl2WorldEvents.values()[(int) (Math.random() * nbPossibleOutcomes)];
-                randEvent = Wtbl2WorldEvents.BIND_GEAR;
+                randEvent = Wtbl2WorldEvents.SWAP_GEAR;
                 switch (randEvent) {
                     case ROCKET_PLAYERS -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "Let the voice of love take you higheeeer");
@@ -100,6 +100,10 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     }
                     case BIND_GEAR -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "A leprechaun has sewn your clothes to your skin :(");
+                        this.wtbl2_ticksBeforeEvent = 1;
+                    }
+                    case SWAP_GEAR -> {
+                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "Remember, sharing is caring");
                         this.wtbl2_ticksBeforeEvent = 1;
                     }
                     default -> {
@@ -164,17 +168,26 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     }
                 }
                 case SWAP_GEAR -> {
+                    if(playersNotCreative.size() < 2)
+                        break;
                     List<PlayerInventory> inventories = new java.util.ArrayList<>(List.of());
                     int nbPlayers = playersNotCreative.size();
                     for (PlayerEntity p : playersNotCreative) {
                         inventories.add(p.getInventory());
                     }
-                    for (int i = 0 ; i < nbPlayers ; ++i) {
-                        PlayerInventory currentInventory = playersNotCreative.get((i+1)%nbPlayers).getInventory();
-                        // Player inventory has 9 columns and 4 rows (36) including hotbar, excluding offhand
-                        for (int slotNumber = 0 ; slotNumber < 27 ; ++slotNumber) {
-                            currentInventory.setStack(slotNumber, inventories.get(i).getStack(slotNumber));
-                        }
+                    // Save an inventory for swapping
+                    List<ItemStack> saveSecondInv = new java.util.ArrayList<>(List.of());
+                    for (int i = 0 ; i < inventories.get(1).size() ; ++i) {
+                        saveSecondInv.add(inventories.get(1).getStack(i));
+                    }
+
+                    for (int i = 1 ; i < nbPlayers ; ++i) {
+                        PlayerInventory nextInventory = playersNotCreative.get((i+1)%nbPlayers).getInventory();
+                        inventories.get(i).clone(nextInventory);
+                    }
+
+                    for (int i = 0 ; i < saveSecondInv.size() ; ++i) {
+                        playersNotCreative.get(0).getInventory().setStack(i, saveSecondInv.get(i));
                     }
                 }
                 default -> {

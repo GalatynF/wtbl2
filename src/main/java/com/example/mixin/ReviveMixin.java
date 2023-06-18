@@ -161,6 +161,7 @@ public abstract class ReviveMixin extends Entity {
             return;
         }
         if (this.isDying()) {
+            this.velocityDirty = false;
             ci.cancel();
         }
     }
