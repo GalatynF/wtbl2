@@ -23,6 +23,34 @@ For setup instructions please see the [fabric wiki page](https://fabricmc.net/wi
 * FAIT Jumpscare stand
 * Rocket animals
 
+## Fonctionnalités
+
+* Vexs tactiques
+* Tours d'Endermen
+* Baisse explosive du chomage
+* Animaux astronautes
+* Baby don't hurt me
+* Danny Wither Phantom
+* La malédiction de Steve
+* Parry Hotter
+* Événements
+* Changement de changement de monde
+  * Nether
+  * End
+* Kevlard
+* Coffres à nom
+* Reyed
+* Thunder Dragon
+* XP = Extermination Player
+* Fleur fusée
+* Couper du bois : feuilles
+* Physique de dessin animé (feu)
+* Tir multiple sur perles
+* Feu grégeois
+* Scaphandre
+* Deuxième chance à la vie
+* Under pressure
+
 ## License
 
 This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
