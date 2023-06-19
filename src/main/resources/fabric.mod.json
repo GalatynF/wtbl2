@@ -41,7 +41,9 @@
 	"custom": {
 		"cardinal-components": [
 			"wtbl2:cursed",
-			"wtbl2:cursed_mannequin"
+			"wtbl2:cursed_mannequin",
+			"wtbl2:attack_stand",
+			"wtbl2:attack_stand_mannequin"
 		]
 	},
 	"suggests": {

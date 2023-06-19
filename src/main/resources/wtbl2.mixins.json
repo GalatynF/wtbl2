@@ -39,6 +39,8 @@
     "parryHotter.AccioedMixin",
     "parryHotter.ParryHotterMixin",
     "parryHotter.SpecialArrowsMixin",
+    "sutando.ArmourStandStandMixin",
+    "sutando.GoldAppleMixin",
     "worldevents.BurnedByAcidRainMixin",
     "worldevents.LongerFireworkMixin",
     "worldevents.ServerWorldEventsMixin"
