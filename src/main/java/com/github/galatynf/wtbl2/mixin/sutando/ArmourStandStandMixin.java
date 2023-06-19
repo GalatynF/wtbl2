@@ -9,6 +9,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.ExplosionBehavior;
@@ -51,6 +53,13 @@ public abstract class ArmourStandStandMixin extends LivingEntity {
                 return;
             }
 
+            if(world.getTime() % 3 == 0) {
+                boolean songHasFinished = Tool.playSong(world,
+                        (Entity) (Object) this,
+                        SoundEvents.BLOCK_NOTE_BLOCK_BASS.value(),
+                        MyComponents.MUSIC_PLAYER.get((Entity) (Object) this).nextNote());
+            }
+
             if(component.getRemainingDuration() == 0) {
                 this.remove(RemovalReason.DISCARDED);
                 MyComponents.STAND_ATTACKER.get(playerOwner).setStandAttack(-1);
@@ -63,10 +72,11 @@ public abstract class ArmourStandStandMixin extends LivingEntity {
 
                 /* ********** ATTACK *********** */
                 if(world.getTime()%5 == 0) {
-                    world.createExplosion(playerOwner,
+                    /*world.createExplosion(playerOwner,
                             playerOwner.getX()+1.5*rotation.x, 1+playerOwner.getY()+1.5*rotation.y, playerOwner.getZ()+1.5*rotation.z,
                             1,
                             World.ExplosionSourceType.NONE);
+                    */
                 }
             }
         }

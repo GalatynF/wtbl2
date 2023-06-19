@@ -5,13 +5,14 @@ import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.util.Identifier;
 
 public class MyComponents implements EntityComponentInitializer {
 
-    public static final ComponentKey<Cursedcomponent> CURSED =
-            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier("wtbl2:cursed"), Cursedcomponent.class);
+    public static final ComponentKey<CursedComponent> CURSED =
+            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier("wtbl2:cursed"), CursedComponent.class);
 
     public static final ComponentKey<CursedMannequinOwnerComponent> CURSED_MANNEQUIN =
             ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier("wtbl2:cursed_mannequin"), CursedMannequinOwnerComponent.class);
@@ -21,6 +22,9 @@ public class MyComponents implements EntityComponentInitializer {
     public static final ComponentKey<StandAttackMannequinComponent> STAND_ATTACK_MANNEQUIN =
             ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier("wtbl2:attack_stand_mannequin"), StandAttackMannequinComponent.class);
 
+    public static final ComponentKey<MusicPlayerComponent> MUSIC_PLAYER =
+            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier("wtbl2:music_player"), MusicPlayerComponent.class);
+
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.registerForPlayers(CURSED, player -> new CursedMannequinComponent(), RespawnCopyStrategy.ALWAYS_COPY);
@@ -28,5 +32,7 @@ public class MyComponents implements EntityComponentInitializer {
 
         registry.registerForPlayers(STAND_ATTACKER, player -> new StandAttackPlayer(), RespawnCopyStrategy.NEVER_COPY);
         registry.registerFor(ArmorStandEntity.class, STAND_ATTACK_MANNEQUIN, mannequin -> new StandAttackMannequin());
+
+        registry.registerFor(Entity.class, MUSIC_PLAYER, entity -> new MusicPlayer());
     }
 }

@@ -1,11 +1,13 @@
 package com.github.galatynf.wtbl2.mixin;
 
+import com.github.galatynf.wtbl2.Tool;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,7 +26,8 @@ public abstract class MovementSpeedMixin extends Entity {
 
     @Inject(method="tick", at=@At("HEAD"))
     private void changeSpeed(CallbackInfo ci) {
-        if(!getWorld().isClient()) {
+        World world = this.getWorld();
+        if(!world.isClient()) {
             if (this.isOnFire()) {
                 this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10, 2, true, false, false));
             } else if (this.getSteppingBlockState().equals(Blocks.SAND.getDefaultState())

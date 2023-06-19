@@ -51,6 +51,9 @@ public abstract class GoldAppleMixin extends LivingEntity {
 
             MyComponents.STAND_ATTACK_MANNEQUIN.get(armorStand).setOwner(this.getUuid());
             MyComponents.STAND_ATTACK_MANNEQUIN.get(armorStand).initialiseAttack(200);
+
+            MyComponents.MUSIC_PLAYER.get(armorStand).startSong("6 6 64 6 9 6 14 6 6 64 6 C B 94 ");
+
             world.spawnEntity(armorStand);
             MyComponents.STAND_ATTACKER.get((PlayerEntity)(Object)this).setStandAttack(armorStand.getId());
         }

@@ -3,7 +3,7 @@ package com.github.galatynf.wtbl2.cardinal;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import net.minecraft.nbt.NbtCompound;
 
-public interface Cursedcomponent extends ComponentV3 {
+public interface CursedComponent extends ComponentV3 {
     boolean isMannequinCursed();
     void setMannequinCursed(boolean cursed);
 
@@ -11,7 +11,7 @@ public interface Cursedcomponent extends ComponentV3 {
     void setMannequinId(int mann);
 }
 
-class CursedMannequinComponent implements Cursedcomponent {
+class CursedMannequinComponent implements CursedComponent {
 
     private boolean isMannequinCursed = false;
     private int mannequinId = -1;
