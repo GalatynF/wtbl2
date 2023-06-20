@@ -22,8 +22,6 @@ public class MyComponents implements EntityComponentInitializer {
     public static final ComponentKey<StandAttackMannequinComponent> STAND_ATTACK_MANNEQUIN =
             ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier("wtbl2:attack_stand_mannequin"), StandAttackMannequinComponent.class);
 
-    public static final ComponentKey<MusicPlayerComponent> MUSIC_PLAYER =
-            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier("wtbl2:music_player"), MusicPlayerComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
@@ -33,6 +31,5 @@ public class MyComponents implements EntityComponentInitializer {
         registry.registerForPlayers(STAND_ATTACKER, player -> new StandAttackPlayer(), RespawnCopyStrategy.NEVER_COPY);
         registry.registerFor(ArmorStandEntity.class, STAND_ATTACK_MANNEQUIN, mannequin -> new StandAttackMannequin());
 
-        registry.registerFor(Entity.class, MUSIC_PLAYER, entity -> new MusicPlayer());
     }
 }

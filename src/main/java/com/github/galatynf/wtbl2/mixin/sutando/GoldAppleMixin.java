@@ -1,6 +1,9 @@
 package com.github.galatynf.wtbl2.mixin.sutando;
 
+import com.github.galatynf.wtbl2.MusicPlayer;
+import com.github.galatynf.wtbl2.Tool;
 import com.github.galatynf.wtbl2.cardinal.MyComponents;
+import com.github.galatynf.wtbl2.iMixin.ISongMixin;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -9,6 +12,7 @@ import net.minecraft.entity.player.PlayerAbilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.EulerAngle;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -31,7 +35,7 @@ public abstract class GoldAppleMixin extends LivingEntity {
     private void setStand(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
         if(!world.isClient()
                 && stack.getItem().equals(Items.GOLDEN_APPLE)
-                && stack.getName().getString().toLowerCase().contains("ora")) {
+                && (stack.getName().getString().toLowerCase().contains("ora") || stack.getName().getString().toLowerCase().contains("muda"))) {
             Vec3d rotation = this.getRotationVector().normalize();
             ArmorStandEntity armorStand = new ArmorStandEntity(world, this.getX()-1.5*rotation.x, this.getY()+1, this.getZ()-1.5*rotation.z);
             armorStand.setYaw(this.getYaw());
@@ -41,8 +45,16 @@ public abstract class GoldAppleMixin extends LivingEntity {
             armorStand.setHideBasePlate(true);
             //armorStand.setInvisible(true);
             // Armour
-            armorStand.equipStack(EquipmentSlot.HEAD, Items.SKELETON_SKULL.getDefaultStack());
-            armorStand.equipStack(EquipmentSlot.CHEST, Items.GOLDEN_CHESTPLATE.getDefaultStack());
+            if (stack.getName().getString().toLowerCase().contains("ora")) {
+                armorStand.equipStack(EquipmentSlot.HEAD, Items.IRON_HELMET.getDefaultStack());
+                armorStand.equipStack(EquipmentSlot.CHEST, Items.IRON_CHESTPLATE.getDefaultStack());
+                ((ISongMixin)armorStand).setSong(MusicPlayer.STARDUST_CRUSADERS);
+            }
+            else {
+                armorStand.equipStack(EquipmentSlot.HEAD, Items.GOLDEN_APPLE.getDefaultStack());
+                armorStand.equipStack(EquipmentSlot.CHEST, Items.GOLDEN_CHESTPLATE.getDefaultStack());
+                ((ISongMixin)armorStand).setSong(MusicPlayer.IL_VENTO_DORO);
+            }
             // Pose
             armorStand.setLeftArmRotation(new EulerAngle(310, 0, 270));
             armorStand.setRightArmRotation(new EulerAngle(310, 0, 90));
@@ -51,8 +63,6 @@ public abstract class GoldAppleMixin extends LivingEntity {
 
             MyComponents.STAND_ATTACK_MANNEQUIN.get(armorStand).setOwner(this.getUuid());
             MyComponents.STAND_ATTACK_MANNEQUIN.get(armorStand).initialiseAttack(200);
-
-            MyComponents.MUSIC_PLAYER.get(armorStand).startSong("6 6 64 6 9 6 14 6 6 64 6 C B 94 ");
 
             world.spawnEntity(armorStand);
             MyComponents.STAND_ATTACKER.get((PlayerEntity)(Object)this).setStandAttack(armorStand.getId());

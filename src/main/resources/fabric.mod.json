@@ -43,8 +43,7 @@
 			"wtbl2:cursed",
 			"wtbl2:cursed_mannequin",
 			"wtbl2:attack_stand",
-			"wtbl2:attack_stand_mannequin",
-			"wtbl2:music_player"
+			"wtbl2:attack_stand_mannequin"
 		]
 	},
 	"suggests": {

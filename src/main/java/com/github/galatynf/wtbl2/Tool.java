@@ -170,33 +170,4 @@ public class Tool {
             world.spawnEntity(witherEntity);
         }
     }
-
-    private static final Map<Character, Float> notes = Map.ofEntries(
-            entry('0', 0.5F),
-            entry('1', 0.529732F),  //sol
-            entry('2', 0.561231F),
-            entry('3', 0.594604F),  //la
-            entry('4', 0.629961F),
-            entry('5', 0.667420F),  //si
-            entry('6', 0.707107F),  //do
-            entry('7', 0.749154F),
-            entry('8', 0.793701F),  //re
-            entry('9', 0.840896F),
-            entry('A', 0.890899F),  //mi
-            entry('B', 0.943874F),  //fa
-            entry('C', 1F),
-            entry('D', 1.059463F)   //sol
-
-    );
-    public static boolean playSong(World world, Entity musician, SoundEvent instrument, char note) {
-        if(note == '!')
-                return false;
-        if(!world.isClient()) {
-            if(note != ' ') {
-                print("SOUNNNNNNNNNNNNNND : " + note);
-                world.playSound(null, musician.getBlockPos(), instrument, SoundCategory.PLAYERS, 10f, notes.get(note));
-            }
-        }
-        return true;
-    }
 }

@@ -1,10 +1,12 @@
 package com.github.galatynf.wtbl2.mixin.worldevents;
 
+import com.github.galatynf.wtbl2.MusicPlayer;
 import com.github.galatynf.wtbl2.iMixin.IFireworkMixin;
 import com.github.galatynf.wtbl2.Tool;
 import com.github.galatynf.wtbl2.cardinal.MyComponents;
 import com.github.galatynf.wtbl2.enums.Wtbl2OverworldEvents;
 import com.github.galatynf.wtbl2.iMixin.IServerWorldMixin;
+import com.github.galatynf.wtbl2.iMixin.ISongMixin;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
@@ -148,6 +150,9 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "Remember, sharing is caring", "red");
                         this.wtbl2_ticksBeforeEvent = 1;
                     }
+                    case EAR_WORM -> {
+                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "A M O G U S", "red");
+                    }
                     default -> {
                         this.wtbl2_event = Wtbl2OverworldEvents.NONE;
                     }
@@ -196,6 +201,11 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                 }
                 case SWAP_GEAR -> {
                     swapGear(playersNotCreative);
+                }
+                case EAR_WORM -> {
+                    for (PlayerEntity p : playersNotCreative) {
+                        ((ISongMixin)p).setSong(MusicPlayer.AMOGUS_DRIP);
+                    }
                 }
                 default -> {
                     Tool.sendGlobalMessage((ServerWorld) (Object) this, "No event this time...");

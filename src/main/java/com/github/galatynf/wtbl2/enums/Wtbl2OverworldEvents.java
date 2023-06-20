@@ -7,5 +7,6 @@ public enum Wtbl2OverworldEvents {
     ACID_RAIN,
     SWAP_GEAR,
     BIND_GEAR,
+    EAR_WORM,
     NONE
 }
