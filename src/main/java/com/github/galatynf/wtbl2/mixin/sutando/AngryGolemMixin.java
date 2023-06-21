@@ -32,7 +32,6 @@ public abstract class AngryGolemMixin extends GolemEntity {
     private void invokeStand(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         World world = this.getWorld();
         if(!world.isClient() && source.getAttacker()!=null && source.getAttacker().getType().equals(EntityType.PLAYER)) {
-            Tool.print("HEUJSFD");
             Vec3d rotation = this.getRotationVector().normalize();
             ArmorStandEntity armorStand = new ArmorStandEntity(world, this.getX()-1.5*rotation.x, this.getY()+1, this.getZ()-1.5*rotation.z);
             armorStand.setYaw(this.getYaw());

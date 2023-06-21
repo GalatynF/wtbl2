@@ -14,32 +14,31 @@ import static java.util.Map.entry;
 
 public class MusicPlayer {
     private static final Map<Character, Float> notesMap = Map.ofEntries(
-            entry('0', 0.5F),
+            entry('0', 0.5F),       //fa#
             entry('1', 0.529732F),  //sol
-            entry('2', 0.561231F),
+            entry('2', 0.561231F),  //sol#
             entry('3', 0.594604F),  //la
-            entry('4', 0.629961F),
+            entry('4', 0.629961F),  //la#
             entry('5', 0.667420F),  //si
             entry('6', 0.707107F),  //do
-            entry('7', 0.749154F),
+            entry('7', 0.749154F),  //do#
             entry('8', 0.793701F),  //re
-            entry('9', 0.840896F),
+            entry('9', 0.840896F),  //re#
             entry('A', 0.890899F),  //mi
             entry('B', 0.943874F),  //fa
-            entry('C', 1F),
-            entry('D', 1.059463F),   //sol
-            entry('E', 1.122462F),
+            entry('C', 1F),         //fa#
+            entry('D', 1.059463F),  //sol
+            entry('E', 1.122462F),  //sol#
             entry('F', 1.189207F),  //la
-            entry('G', 1.259921F),
+            entry('G', 1.259921F),  //la#
             entry('H', 1.334840F),  //si
             entry('I', 1.414214F),  //do
-            entry('J', 1.498307F),
+            entry('J', 1.498307F),  //do#
             entry('K', 1.587401F),  //re
-            entry('L', 1.681793F),
+            entry('L', 1.681793F),  //re#
             entry('M', 1.781797F),  //mi
             entry('N', 1.887749F),  //fa
-            entry('O', 2F),
-            entry('P', 2.3F) //sol
+            entry('O', 2F)          //fa#
     );
     public static class Track {
         public final net.minecraft.sound.SoundEvent instrument;
@@ -86,19 +85,19 @@ public class MusicPlayer {
     }
 
     public static final MusicPlayer IL_VENTO_DORO = new MusicPlayer(new ArrayList<>(Arrays.asList(
-            new Track(SoundEvents.BLOCK_NOTE_BLOCK_BASS.value(), "6_6_64_6_9_6_14_6_6_64_6_C_B_94"),
-            new Track(SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO.value(), "6_6_64_6_9_6_14_6_6_64_6_C_B_94"),
-            new Track(SoundEvents.BLOCK_NOTE_BLOCK_BASEDRUM.value(), "0___0___0___0___0___0___0___0__")
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_BASS.value(),        "6_6_64_6_9_6_14_6_6_64_6_C_B_94_6_6_64_6_9_6_14_6_6_6469_C_B_94"),
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_BANJO.value(),  "6_6_64_6_9_6_14_6_6_64_6_C_B_94_6_6_64_6_9_6_14_6_6_6469_C_B_94"),
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_BASEDRUM.value(),    "0___0____9______0___0____0______0___0____9______0___0____0_____")
     )));
 
     public static final MusicPlayer AMOGUS_DRIP = new MusicPlayer(new ArrayList<>(Arrays.asList(
-            new Track(SoundEvents.BLOCK_NOTE_BLOCK_COW_BELL.value(), "6_9_B_C_B_9_6_____486____________6_9_B_C_B_9_C_____C_B_9_C_B_9_6____"),
-            new Track(SoundEvents.BLOCK_NOTE_BLOCK_BASS.value(),     "__________________________1_6______________________C_____C__________")
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_COW_BELL.value(), "6_9_B_C_B_9_6_____486___________6_9_B_C_B_9_C_____C_B_9_C_B_9_6____"),
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_BASS.value(),     "__________________________1_6_____________________C_____C_____6____")
     )));
 
     public static final MusicPlayer STARDUST_CRUSADERS = new MusicPlayer(new ArrayList<>(Arrays.asList(
-            new Track(SoundEvents.BLOCK_NOTE_BLOCK_GUITAR.value(),      "B_____E___I___N__D_____E_G_H_I__H__E___B_6_I_H__E__B___L_K_____"),
-            new Track(SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO.value(),  "B_____E___I___N__D_____E_G_H_I__H__E___B_6_I_H__E__B___L_K_____"),
-            new Track(SoundEvents.BLOCK_NOTE_BLOCK_SNARE.value(),      "B_____E___I___N__N__N__N_N_NN____I_I___N_N_NN____I_I____L_K__KKK")
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_GUITAR.value(),      "B_____E___I___N_D_____E_G_H_I__H__E___B_6_I_H__E__B___L_K_____"),
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO.value(),  "B_____E___I___N_D_____E_G_H_I__H__E___B_6_I_H__E__B___L_K_____"),
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_SNARE.value(),       "B_____E___I___N_N__N__N_N_NN____I_I___N_N_NN____I_I____L_K__KKK")
     )));
 }
