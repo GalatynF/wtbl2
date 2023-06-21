@@ -6,6 +6,7 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.util.Identifier;
 
@@ -28,8 +29,8 @@ public class MyComponents implements EntityComponentInitializer {
         registry.registerForPlayers(CURSED, player -> new CursedMannequinComponent(), RespawnCopyStrategy.ALWAYS_COPY);
         registry.registerFor(ArmorStandEntity.class, CURSED_MANNEQUIN, mannequin -> new CursedMannequinOwnerClassComponent());
 
-        registry.registerForPlayers(STAND_ATTACKER, player -> new StandAttackPlayer(), RespawnCopyStrategy.NEVER_COPY);
         registry.registerFor(ArmorStandEntity.class, STAND_ATTACK_MANNEQUIN, mannequin -> new StandAttackMannequin());
+        registry.registerFor(LivingEntity.class, STAND_ATTACKER, attacker -> new StandAttackPlayer());
 
     }
 }
