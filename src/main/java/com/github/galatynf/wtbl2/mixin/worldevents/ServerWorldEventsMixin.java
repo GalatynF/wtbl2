@@ -128,7 +128,7 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                 this.wtbl2_ticksBeforeEvent = 200;
                 int nbPossibleOutcomes = Wtbl2OverworldEvents.values().length-1;    //-1 because NONE
                 Wtbl2OverworldEvents randEvent = Wtbl2OverworldEvents.values()[(int) (Math.random() * nbPossibleOutcomes)];
-                //randEvent = Wtbl2OverworldEvents.SWAP_GEAR;
+                //randEvent = Wtbl2OverworldEvents.NINJAGO;
                 switch (randEvent) {
                     case ROCKET_PLAYERS -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "Let the voice of love take you higheeeer", "blue");

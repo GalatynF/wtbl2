@@ -11,8 +11,10 @@ public interface StandAttackMannequinComponent extends ComponentV3 {
     int getOwnerId();
     void initialiseAttack(int duration);
     int getRemainingDuration();
+    void addRemainingDuration(int duration);
     void decrementRemainingDuration();
     boolean isOwnerPlayer();
+    boolean isNormal();
 }
 
 class StandAttackMannequin implements StandAttackMannequinComponent {
@@ -21,12 +23,14 @@ class StandAttackMannequin implements StandAttackMannequinComponent {
     private int ownerId = -1;
     private int remainingDuration = -1;
     private boolean isOwnerPlayer = false;
+    private boolean isNormal = true;
 
     @Override
     public void setOwner(UUID newOwnerUuid, int newOwnerId, boolean isOwnerPlayer) {
         this.ownerUuid = newOwnerUuid;
         this.ownerId = newOwnerId;
         this.isOwnerPlayer = isOwnerPlayer;
+        this.isNormal = false;
     }
 
     @Override
@@ -45,6 +49,11 @@ class StandAttackMannequin implements StandAttackMannequinComponent {
     }
 
     @Override
+    public void addRemainingDuration(int duration) {
+        this.remainingDuration+=duration;
+    }
+
+    @Override
     public int getRemainingDuration() {
         return this.remainingDuration;
     }
@@ -60,16 +69,27 @@ class StandAttackMannequin implements StandAttackMannequinComponent {
     }
 
     @Override
+    public boolean isNormal() {
+        return this.isNormal;
+    }
+
+    @Override
     public void readFromNbt(NbtCompound tag) {
-        this.ownerUuid = tag.getUuid("ownerUuid");
-        this.ownerId = tag.getInt("ownerId");
-        this.isOwnerPlayer = tag.getBoolean("isOwnerPlayer");
+        this.isNormal = tag.getBoolean("isNormal");
+        if(!this.isNormal) {
+            this.ownerUuid = tag.getUuid("ownerUuid");
+            this.ownerId = tag.getInt("ownerId");
+            this.isOwnerPlayer = tag.getBoolean("isOwnerPlayer");
+        }
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        tag.putUuid("ownerUuid", this.ownerUuid);
-        tag.putInt("ownerId", this.ownerId);
-        tag.putBoolean("isOwnerPlayer", this.isOwnerPlayer);
+        tag.putBoolean("isNormal", this.isNormal);
+        if(!this.isNormal) {
+            tag.putUuid("ownerUuid", this.ownerUuid);
+            tag.putInt("ownerId", this.ownerId);
+            tag.putBoolean("isOwnerPlayer", this.isOwnerPlayer);
+        }
     }
 }

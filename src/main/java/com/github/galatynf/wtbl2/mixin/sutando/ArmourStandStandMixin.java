@@ -63,7 +63,7 @@ public abstract class ArmourStandStandMixin extends LivingEntity implements ISon
         World world = this.getWorld();
         if(!world.isClient()) {
             StandAttackMannequinComponent component = MyComponents.STAND_ATTACK_MANNEQUIN.get((ArmorStandEntity)(Object)this);
-            if(component.getOwnerUuid() == null)
+            if(component.isNormal())
                 // Normal armor stand
                 return;
 

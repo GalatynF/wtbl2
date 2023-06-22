@@ -26,7 +26,7 @@ loom {
     splitEnvironmentSourceSets()
 
     mods {
-        "modid" {
+        "wtbl2" {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
         }

@@ -4,6 +4,7 @@ import com.github.galatynf.wtbl2.MusicPlayer;
 import com.github.galatynf.wtbl2.Tool;
 import com.github.galatynf.wtbl2.cardinal.MyComponents;
 import com.github.galatynf.wtbl2.iMixin.ISongMixin;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -36,6 +37,12 @@ public abstract class GoldAppleMixin extends LivingEntity {
         if(!world.isClient()
                 && stack.getItem().equals(Items.GOLDEN_APPLE)
                 && (stack.getName().getString().toLowerCase().contains("ora") || stack.getName().getString().toLowerCase().contains("muda"))) {
+            if(MyComponents.STAND_ATTACKER.get((Entity)(Object)this).getStandId() != -1) {
+                if (world.getEntityById(MyComponents.STAND_ATTACKER.get((Entity)(Object)this).getStandId()) != null) {
+                    MyComponents.STAND_ATTACK_MANNEQUIN.get(world.getEntityById(MyComponents.STAND_ATTACKER.get((Entity) (Object) this).getStandId())).addRemainingDuration(200);
+                    return;
+                }
+            }
             Vec3d rotation = this.getRotationVector().normalize();
             ArmorStandEntity armorStand = new ArmorStandEntity(world, this.getX()-1.5*rotation.x, this.getY()+1, this.getZ()-1.5*rotation.z);
             armorStand.setYaw(this.getYaw());

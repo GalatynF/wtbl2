@@ -44,7 +44,7 @@
     "sutando.GoldAppleMixin",
     "worldevents.BurnedByAcidRainMixin",
     "worldevents.LongerFireworkMixin",
-    "worldevents.ServerWorldEventsMixin"
+   "worldevents.ServerWorldEventsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

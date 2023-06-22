@@ -5,6 +5,7 @@ import net.minecraft.nbt.NbtCompound;
 
 public interface StandAttackPlayerComponent extends ComponentV3 {
     void setStandAttack(int mannequinId);
+    int getStandId();
 }
 
 class StandAttackPlayer implements StandAttackPlayerComponent {
@@ -14,6 +15,11 @@ class StandAttackPlayer implements StandAttackPlayerComponent {
     @Override
     public void setStandAttack(int mannequinId) {
         this.standId = mannequinId;
+    }
+
+    @Override
+    public int getStandId() {
+        return this.standId;
     }
 
     @Override

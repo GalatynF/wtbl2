@@ -74,7 +74,7 @@ public class MusicPlayer {
             if(this.noteIndex < track.notes.length()) {
                 songEnded = false;
                 if(track.notes.charAt(this.noteIndex)!='_') {
-                    world.playSound(null, musician.getBlockPos(), track.instrument, SoundCategory.PLAYERS, 120f, notesMap.get(track.notes.charAt(this.noteIndex)));
+                    world.playSound(null, musician.getBlockPos(), track.instrument, SoundCategory.PLAYERS, 4f, notesMap.get(track.notes.charAt(this.noteIndex)));
                 }
             }
         }
