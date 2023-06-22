@@ -14,31 +14,31 @@ import static java.util.Map.entry;
 
 public class MusicPlayer {
     private static final Map<Character, Float> notesMap = Map.ofEntries(
-            entry('0', 0.5F),       //fa#
-            entry('1', 0.529732F),  //sol
-            entry('2', 0.561231F),  //sol#
-            entry('3', 0.594604F),  //la
-            entry('4', 0.629961F),  //la#
-            entry('5', 0.667420F),  //si
-            entry('6', 0.707107F),  //do
-            entry('7', 0.749154F),  //do#
-            entry('8', 0.793701F),  //re
-            entry('9', 0.840896F),  //re#
-            entry('A', 0.890899F),  //mi
-            entry('B', 0.943874F),  //fa
-            entry('C', 1F),         //fa#
-            entry('D', 1.059463F),  //sol
-            entry('E', 1.122462F),  //sol#
-            entry('F', 1.189207F),  //la
-            entry('G', 1.259921F),  //la#
-            entry('H', 1.334840F),  //si
-            entry('I', 1.414214F),  //do
-            entry('J', 1.498307F),  //do#
-            entry('K', 1.587401F),  //re
-            entry('L', 1.681793F),  //re#
-            entry('M', 1.781797F),  //mi
-            entry('N', 1.887749F),  //fa
-            entry('O', 2F)          //fa#
+            entry('0', 0.5F),       //F# fa#
+            entry('1', 0.529732F),  //G  sol
+            entry('2', 0.561231F),  //G# sol#
+            entry('3', 0.594604F),  //A  la
+            entry('4', 0.629961F),  //A# la#
+            entry('5', 0.667420F),  //B  si
+            entry('6', 0.707107F),  //C  do
+            entry('7', 0.749154F),  //C# do#
+            entry('8', 0.793701F),  //D  re
+            entry('9', 0.840896F),  //D# re#
+            entry('A', 0.890899F),  //E  mi
+            entry('B', 0.943874F),  //F  fa
+            entry('C', 1F),         //F# fa#
+            entry('D', 1.059463F),  //G  sol
+            entry('E', 1.122462F),  //G# sol#
+            entry('F', 1.189207F),  //A  la
+            entry('G', 1.259921F),  //A# la#
+            entry('H', 1.334840F),  //B  si
+            entry('I', 1.414214F),  //C  do
+            entry('J', 1.498307F),  //C# do#
+            entry('K', 1.587401F),  //D  re
+            entry('L', 1.681793F),  //D# re#
+            entry('M', 1.781797F),  //E  mi
+            entry('N', 1.887749F),  //F  fa
+            entry('O', 2F)          //F# fa#
     );
     public static class Track {
         public final net.minecraft.sound.SoundEvent instrument;
@@ -100,4 +100,10 @@ public class MusicPlayer {
             new Track(SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO.value(),  "B_____E___I___N_D_____E_G_H_I__H__E___B_6_I_H__E__B___L_K_____"),
             new Track(SoundEvents.BLOCK_NOTE_BLOCK_SNARE.value(),       "B_____E___I___N_N__N__N_N_NN____I_I___N_N_NN____I_I____L_K__KKK")
     )));
+
+    public static final MusicPlayer BAD_PIGGIES = new MusicPlayer(new ArrayList<>(Arrays.asList(
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), "I___I__GI_G_E_D_GEDB9_B_D_______G___G__ED_B_9_B_D969D_B_9___8__"),
+            new Track(SoundEvents.BLOCK_NOTE_BLOCK_BASS.value(),  "6_D_1_D_6_D_1_D_9_G_4_G_9_G_4_G_4_B_4_B_4_B_4_B_2_9_2_9_2_9_2_9")
+    )));
+
 }

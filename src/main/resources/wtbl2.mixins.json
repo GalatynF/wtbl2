@@ -23,6 +23,7 @@
     "RebreatherMixin",
     "WaterHelmetMixin",
     "WaterPressureMixin",
+    "entity.BadPiggiesMixin",
     "entity.DragonVexSpawnMixin",
     "entity.EndermanTowerMixin",
     "entity.IHateNitwitsMixin",
@@ -44,7 +45,7 @@
     "sutando.GoldAppleMixin",
     "worldevents.BurnedByAcidRainMixin",
     "worldevents.LongerFireworkMixin",
-   "worldevents.ServerWorldEventsMixin"
+    "worldevents.ServerWorldEventsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
