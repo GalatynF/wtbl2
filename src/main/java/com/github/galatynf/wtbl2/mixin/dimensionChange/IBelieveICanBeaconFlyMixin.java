@@ -1,4 +1,4 @@
-package com.github.galatynf.wtbl2.mixin;
+package com.github.galatynf.wtbl2.mixin.dimensionChange;
 
 import com.github.galatynf.wtbl2.Tool;
 import net.minecraft.block.Block;

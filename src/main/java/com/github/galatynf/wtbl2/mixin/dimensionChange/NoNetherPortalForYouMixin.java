@@ -1,5 +1,6 @@
-package com.github.galatynf.wtbl2.mixin;
+package com.github.galatynf.wtbl2.mixin.dimensionChange;
 
+import com.github.galatynf.wtbl2.Tool;
 import com.github.galatynf.wtbl2.cardinal.MyComponents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -9,6 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LargeEntitySpawnHelper;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.GiantEntity;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -25,13 +28,22 @@ public abstract class NoNetherPortalForYouMixin extends Block {
         super(settings);
     }
 
+    private void spawnGiantBoss(World world, BlockPos pos) {
+        GiantEntity giant = new GiantEntity(EntityType.GIANT, world);
+        giant.setPosition(pos.toCenterPos());
+        giant.setPersistent();
+        world.spawnEntity(giant);
+        Tool.addStatus(giant, StatusEffects.ABSORPTION, 99999, 64, true, false);
+    }
+
     @Inject(method="onEntityCollision", at=@At("INVOKE"), cancellable = true)
     private void cantHaveShitInOverworld(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (!world.isClient() && entity.isPlayer() && world.getRegistryKey() == World.OVERWORLD) {
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
             WardenEntity.addDarknessToClosePlayers((ServerWorld)world, Vec3d.ofCenter(pos), null, 40);
-            LargeEntitySpawnHelper.trySpawnAt(EntityType.WARDEN, SpawnReason.TRIGGERED, (ServerWorld)world, pos, 20, 5, 6, LargeEntitySpawnHelper.Requirements.WARDEN);
+            //LargeEntitySpawnHelper.trySpawnAt(EntityType.WARDEN, SpawnReason.TRIGGERED, (ServerWorld)world, pos, 20, 5, 6, LargeEntitySpawnHelper.Requirements.WARDEN);
             MyComponents.CURSED.get(entity).setMannequinCursed(true);
+            spawnGiantBoss(world, pos);
             ci.cancel();
         }
     }
