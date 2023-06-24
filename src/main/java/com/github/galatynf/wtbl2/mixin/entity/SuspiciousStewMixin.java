@@ -26,10 +26,11 @@ public abstract class SuspiciousStewMixin extends LivingEntity implements ISongM
     @Unique
     private MusicPlayer wtbl2_musicPlayer = null;
 
-    @Inject(method="eatFood", at=@At("TAIL"))
+    @Inject(method="eatFood", at=@At("HEAD"))
     private void setAmogus(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
         if(!world.isClient()) {
             if (stack.getItem().equals(Items.SUSPICIOUS_STEW) || stack.getName().toString().toLowerCase().contains("sus")) {
+                Tool.print("AMOGUS");
                 this.wtbl2_musicPlayer = MusicPlayer.AMOGUS_DRIP;
             }
         }

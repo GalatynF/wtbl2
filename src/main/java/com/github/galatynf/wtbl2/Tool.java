@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -108,6 +109,11 @@ public class Tool {
             }
         }
         return result;
+    }
+
+    public static void moveTo(Entity mover, BlockPos target) {
+        Vec3d vector = new Vec3d(target.getX()-mover.getX(), 0, target.getZ()-mover.getZ()).normalize();
+        mover.move(MovementType.SELF, vector);
     }
 
     public static void fireArrow(PlayerEntity user, boolean canPickup, boolean invisible, boolean noGravity, @Nullable String customName) {

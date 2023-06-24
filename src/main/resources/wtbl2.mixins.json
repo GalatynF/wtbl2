@@ -20,6 +20,7 @@
     "WaterHelmetMixin",
     "WaterPressureMixin",
     "dimensionChange.AlternateDimensionHoppingTechniquesMixin",
+    "dimensionChange.GiantFollowerMixin",
     "dimensionChange.GiantMixin",
     "dimensionChange.IBelieveICanBeaconFlyMixin",
     "dimensionChange.NoEndPortalForYouMixin",
@@ -46,7 +47,8 @@
     "sutando.GoldAppleMixin",
     "worldevents.BurnedByAcidRainMixin",
     "worldevents.LongerFireworkMixin",
-    "worldevents.ServerWorldEventsMixin"
+    "worldevents.ServerWorldEventsMixin",
+    "worldevents.StepHeightMixin"
   ],
   "injectors": {
     "defaultRequire": 1

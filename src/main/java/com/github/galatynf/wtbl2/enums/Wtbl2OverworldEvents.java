@@ -8,5 +8,6 @@ public enum Wtbl2OverworldEvents {
     SWAP_GEAR,
     BIND_GEAR,
     EAR_WORM,
+    STEP_HIGH,
     NONE
 }

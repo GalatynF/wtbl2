@@ -63,6 +63,9 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
     @Unique
     private boolean wtbl2_acidRain = false;
 
+    @Unique
+    private boolean wtbl2_stepHigh = false;
+
     @Override
     public Wtbl2OverworldEvents getCurrentEvent() {
         return this.wtbl2_event;
@@ -71,6 +74,11 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
     @Override
     public boolean isAcidRaining() {
         return this.wtbl2_acidRain;
+    }
+
+    @Override
+    public boolean isSteppingHigh() {
+        return this.wtbl2_stepHigh;
     }
 
     private void superpowerPlayer(boolean availablePlayers, List<PlayerEntity> playersNotCreative) {
@@ -121,14 +129,15 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
         if(this.wtbl2_ticksBeforeEvent > 0)
             this.wtbl2_ticksBeforeEvent--;
         // Trigger new event
-        if(this.worldProperties.getTime() % 12000 == 0) {
+        if(this.worldProperties.getTime() % 400 == 0) { //12000
             this.wtbl2_acidRain = false;
+            this.wtbl2_stepHigh = false;
 
             if (this.getRegistryKey().equals(World.OVERWORLD)) {
                 this.wtbl2_ticksBeforeEvent = 200;
                 int nbPossibleOutcomes = Wtbl2OverworldEvents.values().length-1;    //-1 because NONE
                 Wtbl2OverworldEvents randEvent = Wtbl2OverworldEvents.values()[(int) (Math.random() * nbPossibleOutcomes)];
-                //randEvent = Wtbl2OverworldEvents.NINJAGO;
+                randEvent = Wtbl2OverworldEvents.STEP_HIGH;
                 switch (randEvent) {
                     case ROCKET_PLAYERS -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "Let the voice of love take you higheeeer", "blue");
@@ -152,6 +161,9 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     }
                     case EAR_WORM -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "A M O G U S", "red");
+                    }
+                    case STEP_HIGH -> {
+                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "You feel like a dwarf in the shoes of a giant", "red");
                     }
                     default -> {
                         this.wtbl2_event = Wtbl2OverworldEvents.NONE;
@@ -206,6 +218,9 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     for (PlayerEntity p : playersNotCreative) {
                         ((ISongMixin)p).setSong(MusicPlayer.AMOGUS_DRIP);
                     }
+                }
+                case STEP_HIGH -> {
+                    this.wtbl2_stepHigh = true;
                 }
                 default -> {
                     Tool.sendGlobalMessage((ServerWorld) (Object) this, "No event this time...");

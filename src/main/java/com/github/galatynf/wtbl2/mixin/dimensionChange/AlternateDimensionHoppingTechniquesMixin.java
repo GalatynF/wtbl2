@@ -26,7 +26,7 @@ public abstract class AlternateDimensionHoppingTechniquesMixin extends LivingEnt
             // Go to Nether
             if (world.getBlockState(this.getBlockPos()).equals(Blocks.LAVA.getDefaultState())
             && world.getBlockState(this.getBlockPos().add(0, 1, 0)).equals(Blocks.LAVA.getDefaultState())
-            && world.getBlockState(this.getBlockPos().add(0, -1, 0)).equals(Blocks.CRYING_OBSIDIAN.getDefaultState())) {
+            && world.getBlockState(this.getBlockPos().add(0, -1, 0)).equals(Blocks.ORANGE_STAINED_GLASS.getDefaultState())) {
                 if (this.canUsePortals()) {
                     this.setInNetherPortal(this.getBlockPos());
                 }

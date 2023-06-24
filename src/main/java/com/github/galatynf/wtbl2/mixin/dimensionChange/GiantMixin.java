@@ -3,6 +3,8 @@ package com.github.galatynf.wtbl2.mixin.dimensionChange;
 import com.github.galatynf.wtbl2.Tool;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
@@ -66,11 +68,21 @@ public abstract class GiantMixin extends Entity {
                 this.wtbl2_blocksTraveled = 0;
             }
 
-            this.destroyBlocks(this.getBoundingBox().expand(2,0,2));
+            this.giantDestroyBlocks(this.getBoundingBox().expand(2,0,2));
         }
     }
 
-    private boolean destroyBlocks(Box box) {
+    @Inject(method = "onDeath", at=@At("TAIL"))
+    private void drop(DamageSource damageSource, CallbackInfo ci) {
+        ItemEntity item = new ItemEntity(EntityType.ITEM, getWorld());
+        item.setStack(Items.ORANGE_STAINED_GLASS.getDefaultStack());
+        item.setPosition(this.getPos());
+        item.setNeverDespawn();
+        item.setInvulnerable(true);
+        world.spawnEntity(item);
+    }
+
+    private boolean giantDestroyBlocks(Box box) {
         int i = MathHelper.floor(box.minX);
         int j = MathHelper.floor(box.minY);
         int k = MathHelper.floor(box.minZ);
@@ -88,7 +100,7 @@ public abstract class GiantMixin extends Entity {
                     if (!blockState.isAir()) {
                         if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)
                                 && this.getY() < p) {
-                            bl2 = this.world.breakBlock(blockPos, Math.random()<0.3, (Entity)(Object)this) || bl2;
+                            bl2 = this.world.breakBlock(blockPos, false, (Entity)(Object)this) || bl2;
 
                         } else {
                             slowedDownByBlock = true;
@@ -108,8 +120,11 @@ public abstract class GiantMixin extends Entity {
 
     @Inject(method = "getStepHeight", at=@At("HEAD"), cancellable = true)
     private void returnOne(CallbackInfoReturnable<Float> cir) {
-        float step = super.getStepHeight();
-        cir.setReturnValue(Math.max(step,1.5f));
+        World world = this.getWorld();
+        if (!world.isClient() && this.getType().equals(EntityType.GIANT)) {
+            float step = super.getStepHeight();
+            cir.setReturnValue(Math.max(step, 1.5f));
+        }
     }
 
 
