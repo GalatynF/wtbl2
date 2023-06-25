@@ -74,12 +74,14 @@ public abstract class GiantMixin extends Entity {
 
     @Inject(method = "onDeath", at=@At("TAIL"))
     private void drop(DamageSource damageSource, CallbackInfo ci) {
-        ItemEntity item = new ItemEntity(EntityType.ITEM, getWorld());
-        item.setStack(Items.ORANGE_STAINED_GLASS.getDefaultStack());
-        item.setPosition(this.getPos());
-        item.setNeverDespawn();
-        item.setInvulnerable(true);
-        world.spawnEntity(item);
+        if(this.getType().equals(EntityType.GIANT)) {
+            ItemEntity item = new ItemEntity(EntityType.ITEM, getWorld());
+            item.setStack(Items.ORANGE_STAINED_GLASS.getDefaultStack());
+            item.setPosition(this.getPos());
+            item.setNeverDespawn();
+            item.setInvulnerable(true);
+            world.spawnEntity(item);
+        }
     }
 
     private boolean giantDestroyBlocks(Box box) {
