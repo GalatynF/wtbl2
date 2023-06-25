@@ -176,4 +176,9 @@ public class Tool {
             world.spawnEntity(witherEntity);
         }
     }
+
+    public static <T extends Enum<?>> T randomEnum(Class<T> clazz, World world){
+        int x = world.random.nextInt(clazz.getEnumConstants().length);
+        return clazz.getEnumConstants()[x];
+    }
 }

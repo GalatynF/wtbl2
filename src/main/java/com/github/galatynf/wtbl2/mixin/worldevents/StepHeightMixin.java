@@ -1,6 +1,7 @@
 package com.github.galatynf.wtbl2.mixin.worldevents;
 
 import com.github.galatynf.wtbl2.Tool;
+import com.github.galatynf.wtbl2.enums.Wtbl2OverworldEvents;
 import com.github.galatynf.wtbl2.iMixin.IServerWorldMixin;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -20,7 +21,7 @@ public abstract class StepHeightMixin extends Entity {
     @Inject(method = "getStepHeight", at=@At("HEAD"), cancellable = true)
     private void returnOne(CallbackInfoReturnable<Float> cir) {
         World world = this.getWorld();
-        if (!world.isClient() && this.getType().equals(EntityType.PLAYER) && ((IServerWorldMixin)world).isSteppingHigh()) {
+        if (!world.isClient() && this.getType().equals(EntityType.PLAYER) && ((IServerWorldMixin)world).getCurrentEvent().equals(Wtbl2OverworldEvents.STEP_HIGH)) {
             float step = super.getStepHeight();
             cir.setReturnValue(Math.max(step, 1.5f));
         }

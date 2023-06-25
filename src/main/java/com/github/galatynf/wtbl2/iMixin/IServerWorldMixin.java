@@ -4,6 +4,4 @@ import com.github.galatynf.wtbl2.enums.Wtbl2OverworldEvents;
 
 public interface IServerWorldMixin {
     Wtbl2OverworldEvents getCurrentEvent();
-    boolean isAcidRaining();
-    boolean isSteppingHigh();
 }

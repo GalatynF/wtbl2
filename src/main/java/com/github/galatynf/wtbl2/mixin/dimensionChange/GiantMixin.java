@@ -46,7 +46,7 @@ public abstract class GiantMixin extends Entity {
         World world = this.getWorld();
         if(!world.isClient() && this.getType().equals(EntityType.GIANT) && !this.isDead()) {
 
-            float force = 0.3F;
+            float force = 0.45F;
             switch (wtbl2_direction) {
                 case('n') -> {
                     this.move(MovementType.SELF, new Vec3d(0, 0, force));
@@ -62,7 +62,7 @@ public abstract class GiantMixin extends Entity {
                 }
             }
             this.wtbl2_blocksTraveled++;
-            if(this.wtbl2_blocksTraveled >= 200) {
+            if(this.wtbl2_blocksTraveled >= 750) {
                 this.wtbl2_direction = this.wtbl2_nextDir.get(this.wtbl2_direction);
                 this.setRotation(this.getYaw()-90, this.getPitch());
                 this.wtbl2_blocksTraveled = 0;

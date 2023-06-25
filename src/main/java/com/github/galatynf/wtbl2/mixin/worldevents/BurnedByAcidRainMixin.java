@@ -1,5 +1,6 @@
 package com.github.galatynf.wtbl2.mixin.worldevents;
 
+import com.github.galatynf.wtbl2.enums.Wtbl2OverworldEvents;
 import com.github.galatynf.wtbl2.iMixin.IServerWorldMixin;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -29,7 +30,7 @@ public abstract class BurnedByAcidRainMixin {
         if(!world.isClient()
                 && this.getType().equals(EntityType.PLAYER)
                 && this.isBeingRainedOn()
-                && ((IServerWorldMixin)world).isAcidRaining()) {
+                && ((IServerWorldMixin)world).getCurrentEvent().equals(Wtbl2OverworldEvents.ACID_RAIN)) {
             this.damage(world.getDamageSources().generic(), 1);
         }
     }

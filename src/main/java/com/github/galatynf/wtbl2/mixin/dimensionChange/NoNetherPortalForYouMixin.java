@@ -10,8 +10,13 @@ import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.*;
+import net.minecraft.entity.passive.HorseColor;
+import net.minecraft.entity.passive.HorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -21,8 +26,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Collections;
+import java.util.List;
+
 @Mixin(NetherPortalBlock.class)
 public abstract class NoNetherPortalForYouMixin extends Block {
+
+    private static final List<String> horseNames = List.of("Lightning", "Thunder", "Horsy McHorseFace", "Tornado", "Hurricane", "Cyclone", "Kamikaze", "Jetstream", "Gust");
     public NoNetherPortalForYouMixin(Settings settings) {
         super(settings);
     }
@@ -80,6 +90,27 @@ public abstract class NoNetherPortalForYouMixin extends Block {
         world.spawnEntity(blaze);
     }
 
+    private void spawnHorsesAndRide(World world) {
+        int number = 0;
+        for (PlayerEntity p : world.getPlayers()) {
+            List<String> namesRand = new java.util.ArrayList<>(horseNames);
+            Collections.shuffle(namesRand);
+
+            if(!p.isCreative()) {
+                HorseEntity horsy = new HorseEntity(EntityType.HORSE, world);
+                horsy.setPosition(p.getPos());
+                horsy.setInvulnerable(true);
+                horsy.setCustomName(Text.of(namesRand.get(number)));
+                horsy.setVariant(Tool.randomEnum(HorseColor.class, world));
+                horsy.saddle(SoundCategory.NEUTRAL);
+                horsy.setTame(true);
+                world.spawnEntity(horsy);
+                p.startRiding(horsy);
+                number++;
+            }
+        }
+    }
+
     @Inject(method="onEntityCollision", at=@At("INVOKE"), cancellable = true)
     private void cantHaveShitInOverworld(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (!world.isClient() && entity.isPlayer() && world.getRegistryKey() == World.OVERWORLD) {
@@ -94,6 +125,8 @@ public abstract class NoNetherPortalForYouMixin extends Block {
             for (int i = 0 ; i < 4 ; ++i)
                 spawnRavagerMinion(world, pos.add(-5, 0, 0), giantId, "evoker", 7+i%2*5);
             spawnBlaze(world, pos, giantId);
+
+            spawnHorsesAndRide(world);
 
             ci.cancel();
         }

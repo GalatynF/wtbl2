@@ -45,6 +45,7 @@
     "sutando.AngryGolemMixin",
     "sutando.ArmourStandStandMixin",
     "sutando.GoldAppleMixin",
+    "worldevents.ArrowRainMixin",
     "worldevents.BurnedByAcidRainMixin",
     "worldevents.LongerFireworkMixin",
     "worldevents.ServerWorldEventsMixin",

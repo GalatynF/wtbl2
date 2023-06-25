@@ -60,26 +60,13 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
     @Unique
     private Wtbl2OverworldEvents wtbl2_event = Wtbl2OverworldEvents.NONE;
 
-    @Unique
-    private boolean wtbl2_acidRain = false;
-
-    @Unique
-    private boolean wtbl2_stepHigh = false;
+    @Unique Wtbl2OverworldEvents wtbl2_currentEvent = Wtbl2OverworldEvents.NONE;
 
     @Override
     public Wtbl2OverworldEvents getCurrentEvent() {
-        return this.wtbl2_event;
+        return this.wtbl2_currentEvent;
     }
 
-    @Override
-    public boolean isAcidRaining() {
-        return this.wtbl2_acidRain;
-    }
-
-    @Override
-    public boolean isSteppingHigh() {
-        return this.wtbl2_stepHigh;
-    }
 
     private void superpowerPlayer(boolean availablePlayers, List<PlayerEntity> playersNotCreative) {
         if (!availablePlayers)
@@ -129,16 +116,19 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
         if(this.wtbl2_ticksBeforeEvent > 0)
             this.wtbl2_ticksBeforeEvent--;
         // Trigger new event
-        if(this.worldProperties.getTime() % 400 == 0) { //12000
-            this.wtbl2_acidRain = false;
-            this.wtbl2_stepHigh = false;
+        if(this.worldProperties.getTime() % 12000 == 0) { //12000
+            this.wtbl2_currentEvent = Wtbl2OverworldEvents.NONE;
 
             if (this.getRegistryKey().equals(World.OVERWORLD)) {
                 this.wtbl2_ticksBeforeEvent = 200;
-                int nbPossibleOutcomes = Wtbl2OverworldEvents.values().length-1;    //-1 because NONE
-                Wtbl2OverworldEvents randEvent = Wtbl2OverworldEvents.values()[(int) (Math.random() * nbPossibleOutcomes)];
-                randEvent = Wtbl2OverworldEvents.STEP_HIGH;
-                switch (randEvent) {
+
+                this.wtbl2_event = Tool.randomEnum(Wtbl2OverworldEvents.class, (World)(Object)this);
+                if(this.wtbl2_event.equals(Wtbl2OverworldEvents.NONE))
+                    this.wtbl2_event = Wtbl2OverworldEvents.SUPERPOWERED_PLAYER;
+                //this.wtbl2_event = Wtbl2OverworldEvents.ARROW_RAIN;
+                this.wtbl2_currentEvent = this.wtbl2_event;
+
+                switch (this.wtbl2_event) {
                     case ROCKET_PLAYERS -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "Let the voice of love take you higheeeer", "blue");
                     }
@@ -163,13 +153,15 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "A M O G U S", "red");
                     }
                     case STEP_HIGH -> {
-                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "You feel like a dwarf in the shoes of a giant", "red");
+                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "You feel like a dwarf in the shoes of a giant", "blue");
+                    }
+                    case ARROW_RAIN -> {
+                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "Justice rains from above !", "red");
                     }
                     default -> {
                         this.wtbl2_event = Wtbl2OverworldEvents.NONE;
                     }
                 }
-                this.wtbl2_event = randEvent;
             }
         }
 
@@ -201,7 +193,6 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                 }
                 case ACID_RAIN -> {
                     this.setWeather(0, 3600, true, true);
-                    this.wtbl2_acidRain = true;
                 }
                 case BIND_GEAR -> {
                     for (PlayerEntity p : playersNotCreative) {
@@ -220,7 +211,10 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     }
                 }
                 case STEP_HIGH -> {
-                    this.wtbl2_stepHigh = true;
+
+                }
+                case ARROW_RAIN -> {
+
                 }
                 default -> {
                     Tool.sendGlobalMessage((ServerWorld) (Object) this, "No event this time...");
