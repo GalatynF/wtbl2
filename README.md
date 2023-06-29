@@ -48,8 +48,8 @@ For setup instructions please see the [fabric wiki page](https://fabricmc.net/wi
 * Tir multiple sur perles
 * Feu grégeois
 * Scaphandre
-* Deuxième chance à la vie
 * Under pressure
+* Kentucky Fried Diamonds
 
 ## License
 

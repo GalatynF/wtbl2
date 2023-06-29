@@ -3,6 +3,8 @@ package com.github.galatynf.wtbl2.mixin.dimensionChange;
 import com.github.galatynf.wtbl2.Tool;
 import com.github.galatynf.wtbl2.cardinal.MyComponents;
 import com.github.galatynf.wtbl2.iMixin.IGiantFollowerMixin;
+import com.github.galatynf.wtbl2.iMixin.IServerWorldGiantMixin;
+import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -42,7 +44,8 @@ public abstract class NoNetherPortalForYouMixin extends Block {
         giant.setPosition(pos.toCenterPos());
         giant.setPersistent();
         world.spawnEntity(giant);
-        Tool.addStatus(giant, StatusEffects.ABSORPTION, 99999, 64, true, false);
+        Tool.addStatus(giant, StatusEffects.ABSORPTION, 99999, 40, true, false);
+        Tool.addStatus(giant, StatusEffects.GLOWING, 99999, 0, false, false);
 
         return giant.getId();
     }
@@ -115,6 +118,10 @@ public abstract class NoNetherPortalForYouMixin extends Block {
     private void cantHaveShitInOverworld(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (!world.isClient() && entity.isPlayer() && world.getRegistryKey() == World.OVERWORLD) {
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            if(((IServerWorldGiantMixin)world).hasSpawnedGiant()) {
+                return;
+            }
+            ((IServerWorldGiantMixin)world).setHasSpawnedGiant(true);
             WardenEntity.addDarknessToClosePlayers((ServerWorld)world, Vec3d.ofCenter(pos), null, 40);
             //LargeEntitySpawnHelper.trySpawnAt(EntityType.WARDEN, SpawnReason.TRIGGERED, (ServerWorld)world, pos, 20, 5, 6, LargeEntitySpawnHelper.Requirements.WARDEN);
             MyComponents.CURSED.get(entity).setMannequinCursed(true);

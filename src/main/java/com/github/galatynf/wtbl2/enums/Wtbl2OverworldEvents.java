@@ -10,5 +10,6 @@ public enum Wtbl2OverworldEvents {
     EAR_WORM,
     STEP_HIGH,
     ARROW_RAIN,
+    OBSIDIAN_PRISON,
     NONE
 }

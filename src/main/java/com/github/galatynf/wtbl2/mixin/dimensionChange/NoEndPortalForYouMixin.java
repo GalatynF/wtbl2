@@ -34,7 +34,7 @@ public abstract class NoEndPortalForYouMixin extends BlockWithEntity {
         // Random pillars
         for (int i = -groundRadius ; i < groundRadius ; i+=3) {
             for (int j = -groundRadius ; j < groundRadius ; j+=3) {
-                if (Math.random() < 0.1) {
+                if (Math.random() < 0.2) {
                     Tool.fillCube(world,
                                     new BlockPos((int) (i + Math.random()*3), -3, (int) (j + Math.random()*3)).add(centre.getX(), centre.getY(), centre.getZ()),
                                     new BlockPos(i, (int) (Math.random()*10-1), j).add(centre.getX(), centre.getY(), centre.getZ()),

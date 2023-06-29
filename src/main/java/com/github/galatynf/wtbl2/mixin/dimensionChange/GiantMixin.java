@@ -2,8 +2,12 @@ package com.github.galatynf.wtbl2.mixin.dimensionChange;
 
 import com.github.galatynf.wtbl2.Tool;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.WitherSkeletonEntity;
+import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -41,12 +45,26 @@ public abstract class GiantMixin extends Entity {
     @Unique
     private char wtbl2_direction = 'n';
 
+    private void spawnZombie(World world) {
+        ZombieEntity z = new ZombieEntity(world);
+        z.setPosition(this.getPos());
+        Tool.addStatus(z, StatusEffects.REGENERATION, 9999, 0, false, false);
+        world.spawnEntity(z);
+    }
+
+    private void spawnWitherSkeleton(World world) {
+        WitherSkeletonEntity w = new WitherSkeletonEntity(EntityType.WITHER_SKELETON, world);
+        w.setPosition(this.getPos());
+        Tool.addStatus(w, StatusEffects.REGENERATION, 9999, 0, false, false);
+        world.spawnEntity(w);
+    }
+
     @Inject(method = "tick", at=@At("HEAD"))
     private void move(CallbackInfo ci) {
         World world = this.getWorld();
         if(!world.isClient() && this.getType().equals(EntityType.GIANT) && !this.isDead()) {
 
-            float force = 0.45F;
+            float force = 0.35F;
             switch (wtbl2_direction) {
                 case('n') -> {
                     this.move(MovementType.SELF, new Vec3d(0, 0, force));
@@ -62,13 +80,34 @@ public abstract class GiantMixin extends Entity {
                 }
             }
             this.wtbl2_blocksTraveled++;
-            if(this.wtbl2_blocksTraveled >= 750) {
+            if(this.wtbl2_blocksTraveled >= 1000) {
                 this.wtbl2_direction = this.wtbl2_nextDir.get(this.wtbl2_direction);
                 this.setRotation(this.getYaw()-90, this.getPitch());
                 this.wtbl2_blocksTraveled = 0;
             }
 
+            for (int i = -5 ; i < 5 ; ++i) {
+                for (int j = -5 ; j < 5 ; ++j) {
+                    if(world.getBlockState(this.getBlockPos().add(i, -1, j)).getBlock().equals(Blocks.WATER)) {
+                        world.setBlockState(this.getBlockPos().add(i, -1, j), Blocks.NETHER_BRICKS.getDefaultState());
+                    }
+                }
+            }
+
             this.giantDestroyBlocks(this.getBoundingBox().expand(2,0,2));
+
+            if (world.getTime()%100==0) {
+                int rand = (int) (Math.random()*3);
+                if(rand == 0) {
+                    this.spawnZombie(world);
+                    this.spawnZombie(world);
+                    this.spawnZombie(world);
+                }
+                else if (rand == 1) {
+                    this.spawnWitherSkeleton(world);
+                    this.spawnWitherSkeleton(world);
+                }
+            }
         }
     }
 

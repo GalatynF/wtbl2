@@ -7,6 +7,7 @@ import com.github.galatynf.wtbl2.cardinal.MyComponents;
 import com.github.galatynf.wtbl2.enums.Wtbl2OverworldEvents;
 import com.github.galatynf.wtbl2.iMixin.IServerWorldMixin;
 import com.github.galatynf.wtbl2.iMixin.ISongMixin;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
@@ -125,7 +126,7 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                 this.wtbl2_event = Tool.randomEnum(Wtbl2OverworldEvents.class, (World)(Object)this);
                 if(this.wtbl2_event.equals(Wtbl2OverworldEvents.NONE))
                     this.wtbl2_event = Wtbl2OverworldEvents.SUPERPOWERED_PLAYER;
-                //this.wtbl2_event = Wtbl2OverworldEvents.ARROW_RAIN;
+                //this.wtbl2_event = Wtbl2OverworldEvents.OBSIDIAN_PRISON;
                 this.wtbl2_currentEvent = this.wtbl2_event;
 
                 switch (this.wtbl2_event) {
@@ -157,6 +158,9 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     }
                     case ARROW_RAIN -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "Justice rains from above !", "red");
+                    }
+                    case OBSIDIAN_PRISON -> {
+                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "That's it, you're going to G. Baby Jail", "red");
                     }
                     default -> {
                         this.wtbl2_event = Wtbl2OverworldEvents.NONE;
@@ -216,11 +220,27 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                 case ARROW_RAIN -> {
 
                 }
+                case OBSIDIAN_PRISON -> {
+                    for (PlayerEntity p : playersNotCreative) {
+                        this.constructPrison(p);
+                    }
+                }
                 default -> {
                     Tool.sendGlobalMessage((ServerWorld) (Object) this, "No event this time...");
                 }
             }
             this.wtbl2_event = Wtbl2OverworldEvents.NONE;
+        }
+    }
+
+    private void constructPrison(PlayerEntity p) {
+        for (int i = -2 ; i < 2 ; ++i) {
+            for (int j = -2 ; j < 2 ; ++j) {
+                for (int y = -1 ; y < 3 ; ++y) {
+                    if(y == -1 || y==2 || i == -2 || i == 1 || j==-2 || j == 1)
+                        this.setBlockState(p.getBlockPos().add(i, y, j), Blocks.OBSIDIAN.getDefaultState());
+                }
+            }
         }
     }
 }
