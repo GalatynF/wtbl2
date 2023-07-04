@@ -26,7 +26,6 @@
     "dimensionChange.NoEndPortalForYouMixin",
     "dimensionChange.NoNetherPortalForYouMixin",
     "dimensionChange.WorldMixin",
-    "player.MoreXPMixin",
     "entity.BadPiggiesMixin",
     "entity.ChickenDiamondMixin",
     "entity.DragonVexSpawnMixin",
@@ -45,14 +44,15 @@
     "parryHotter.AccioedMixin",
     "parryHotter.ParryHotterMixin",
     "parryHotter.SpecialArrowsMixin",
+    "player.MoreXPMixin",
     "sutando.AngryGolemMixin",
     "sutando.ArmourStandStandMixin",
     "sutando.GoldAppleMixin",
     "worldevents.ArrowRainMixin",
     "worldevents.BurnedByAcidRainMixin",
+    "worldevents.ProximityManagementMixin",
     "worldevents.LongerFireworkMixin",
-    "worldevents.ServerWorldEventsMixin",
-    "worldevents.StepHeightMixin"
+    "worldevents.ServerWorldEventsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -8,8 +8,9 @@ public enum Wtbl2OverworldEvents {
     SWAP_GEAR,
     BIND_GEAR,
     EAR_WORM,
-    STEP_HIGH,
     ARROW_RAIN,
     OBSIDIAN_PRISON,
+    COVID_19,
+    HUGGY,
     NONE
 }

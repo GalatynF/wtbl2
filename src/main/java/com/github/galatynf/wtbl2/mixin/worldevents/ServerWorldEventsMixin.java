@@ -126,8 +126,7 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                 this.wtbl2_event = Tool.randomEnum(Wtbl2OverworldEvents.class, (World)(Object)this);
                 if(this.wtbl2_event.equals(Wtbl2OverworldEvents.NONE))
                     this.wtbl2_event = Wtbl2OverworldEvents.SUPERPOWERED_PLAYER;
-                //this.wtbl2_event = Wtbl2OverworldEvents.OBSIDIAN_PRISON;
-                this.wtbl2_currentEvent = this.wtbl2_event;
+                //this.wtbl2_event = Wtbl2OverworldEvents.HUGGY;
 
                 switch (this.wtbl2_event) {
                     case ROCKET_PLAYERS -> {
@@ -153,14 +152,18 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     case EAR_WORM -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "A M O G U S", "red");
                     }
-                    case STEP_HIGH -> {
-                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "You feel like a dwarf in the shoes of a giant", "blue");
-                    }
                     case ARROW_RAIN -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "Justice rains from above !", "red");
                     }
                     case OBSIDIAN_PRISON -> {
                         Tool.sendGlobalMessage((ServerWorld) (Object) this, "That's it, you're going to G. Baby Jail", "red");
+                    }
+                    case COVID_19 -> {
+                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "Social distancing is in effect !", "red");
+                    }
+                    case HUGGY -> {
+                        Tool.sendGlobalMessage((ServerWorld) (Object) this, "Find a partner less than 10 blocks away ; you have 30 seconds", "red");
+                        this.wtbl2_ticksBeforeEvent = 600;  //600
                     }
                     default -> {
                         this.wtbl2_event = Wtbl2OverworldEvents.NONE;
@@ -171,6 +174,7 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
 
         // Activate new event
         if(this.wtbl2_ticksBeforeEvent == 0 && !this.wtbl2_event.equals(Wtbl2OverworldEvents.NONE)) {
+            this.wtbl2_currentEvent = this.wtbl2_event;
             List<PlayerEntity> playersNotCreative = Tool.getPlayersNotCreative((World)(Object)this);
             boolean availablePlayers = playersNotCreative.size() != 0;
             switch (this.wtbl2_event) {
@@ -214,9 +218,6 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                         ((ISongMixin)p).setSong(MusicPlayer.AMOGUS_DRIP);
                     }
                 }
-                case STEP_HIGH -> {
-
-                }
                 case ARROW_RAIN -> {
 
                 }
@@ -224,6 +225,12 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                     for (PlayerEntity p : playersNotCreative) {
                         this.constructPrison(p);
                     }
+                }
+                case COVID_19 -> {
+
+                }
+                case HUGGY -> {
+
                 }
                 default -> {
                     Tool.sendGlobalMessage((ServerWorld) (Object) this, "No event this time...");
