@@ -117,7 +117,7 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
         if(this.wtbl2_ticksBeforeEvent > 0)
             this.wtbl2_ticksBeforeEvent--;
         // Trigger new event
-        if(this.worldProperties.getTime() % 12000 == 0) { //12000
+        if(this.worldProperties.getTime() % 300 == 0) { //12000
             this.wtbl2_currentEvent = Wtbl2OverworldEvents.NONE;
 
             if (this.getRegistryKey().equals(World.OVERWORLD)) {
@@ -126,7 +126,7 @@ public abstract class ServerWorldEventsMixin extends World implements IServerWor
                 this.wtbl2_event = Tool.randomEnum(Wtbl2OverworldEvents.class, (World)(Object)this);
                 if(this.wtbl2_event.equals(Wtbl2OverworldEvents.NONE))
                     this.wtbl2_event = Wtbl2OverworldEvents.SUPERPOWERED_PLAYER;
-                //this.wtbl2_event = Wtbl2OverworldEvents.HUGGY;
+                this.wtbl2_event = Wtbl2OverworldEvents.COVID_19;
 
                 switch (this.wtbl2_event) {
                     case ROCKET_PLAYERS -> {

@@ -19,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ProximityManagementMixin extends LivingEntity {
     @Shadow public abstract boolean isCreative();
 
+    @Shadow protected abstract void takeShieldHit(LivingEntity attacker);
+
     protected ProximityManagementMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -28,10 +30,14 @@ public abstract class ProximityManagementMixin extends LivingEntity {
         World world = this.getWorld();
         if(!world.isClient() && !this.isCreative()) {
             if (((IServerWorldMixin)world).getCurrentEvent().equals(Wtbl2OverworldEvents.COVID_19)) {
-                PlayerEntity p = world.getClosestPlayer((PlayerEntity) (Object) this, 5);
-                if (p != null && !p.isCreative() && p.getUuid()!=this.getUuid() && this.getStatusEffect(StatusEffects.POISON)==null) {
+                boolean thereIsAPlayer = false;
+                for (PlayerEntity p : world.getPlayers()) {
+                    if(p.getUuid() != this.getUuid() && this.distanceTo(p)<=5 && !p.isCreative()) {
+                        thereIsAPlayer = true;
+                    }
+                }
+                if (thereIsAPlayer && this.getStatusEffect(StatusEffects.POISON)==null) {
                     Tool.addStatus((LivingEntity)(Object)this, StatusEffects.POISON, 2400, 0, false, true);
-                    Tool.addStatus(p, StatusEffects.POISON, 2400, 0, false, true);
                 }
             }
             else if (((IServerWorldMixin)world).getCurrentEvent().equals(Wtbl2OverworldEvents.HUGGY)) {
