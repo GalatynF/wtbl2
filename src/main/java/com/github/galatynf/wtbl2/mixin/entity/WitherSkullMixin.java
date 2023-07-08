@@ -18,19 +18,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WitherSkullEntity.class)
 public abstract class WitherSkullMixin extends ExplosiveProjectileEntity {
-    @Shadow public abstract boolean isCharged();
-
     protected WitherSkullMixin(EntityType<? extends ExplosiveProjectileEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public WitherSkullMixin(EntityType<? extends ExplosiveProjectileEntity> type, double x, double y, double z, double directionX, double directionY, double directionZ, World world) {
-        super(type, x, y, z, directionX, directionY, directionZ, world);
-    }
-
-    public WitherSkullMixin(EntityType<? extends ExplosiveProjectileEntity> type, LivingEntity owner, double directionX, double directionY, double directionZ, World world) {
-        super(type, owner, directionX, directionY, directionZ, world);
-    }
+    @Shadow public abstract boolean isCharged();
 
     @Inject(method="onCollision", at=@At("TAIL"))
     private void summonPhantoms(HitResult hitResult, CallbackInfo ci) {
